@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>HUMANITY</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.reflowhq.com/v1/toolkit.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-icons.css">
+    <link rel="stylesheet" href="assets/css/Projects-Grid-images.css">
+    <link rel="stylesheet" href="assets/css/Simple-Slider-swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg shadow-sm navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="assets/img/Humanity%20Logo.jpg" width="50em" height="50em">HUMANITY</a>
+            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                <span class="visually-hidden">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="giftout.html">Gift Out</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="profile.html">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row pt-4">
+            <div class="p display-6 text-center">Please provide details of what you wish to give out</div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-8 gx-5 ps-5 ms-5">
+                <form id="itemForm">
+                    <!-- ITEM CATEGORY -->
+                    <label for="chooseItem" class="form-label fw-semibold fs-5">Item Category</label>
+                    <select class="form-select mb-3" id="chooseItem" aria-label="Default select example">
+                        <option selected disabled>Choose Item</option>
+                        <option value="Clothes">Clothes</option>
+                        <option value="Home Appliances">Home Appliances</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Construction tools">Construction Tools</option>
+                        <option value="Books">Books</option>
+                        <option value="Learning Materials">Learning Materials</option>
+                    </select>
+
+                    <!-- ITEM PICTURE -->
+                    <label for="uploadImage" class="form-label fw-semibold fs-5 mt-3">Upload Images of Items</label>
+                    <input type="file" id="uploadImage" class="form-control mb-4">
+
+                    <!-- ITEM NAME -->
+                    <div class="mb-4">
+                        <label for="itemName" class="form-label fw-semibold fs-5">Item Name</label>
+                        <input type="text" class="form-control" id="itemName">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="itemDescription" class="form-label fw-semibold fs-5">Item Description</label>
+                        <textarea class="form-control" id="itemDescription" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="location" class="form-label fw-semibold fs-5">Your Location</label>
+                        <select class="form-select mb-4" id="location">
+                            <option selected disabled>Choose Location in Koforidua</option>
+                            <option value="Jumapo">Jumapo</option>
+                            <option value="Suhyen">Suhyen</option>
+                            <option value="Okrase">Okrase</option>
+                            <option value="Poly Junction">Poly Junction</option>
+                            <option value="Mile 50">Mile 50</option>
+                            <option value="Jackson Park">Jackson Park</option>
+                        </select>
+                    </div>
+
+                    <label for="yearsUsed" class="form-label fw-semibold fs-5">Item's Number of Years</label>
+                    <select class="form-select mb-4" id="yearsUsed">
+                        <option selected disabled>Choose Number of Years Used</option>
+                        <option value="1-5 Years">1 - 5 Years</option>
+                        <option value="6-10 Years">6 - 10 Years</option>
+                        <option value="Above 11 Years">Above 11 Years</option>
+                    </select>
+
+                    <div class="mb-4">
+                        <label for="phoneNumber" class="form-label fw-semibold fs-5">Mobile Phone Number</label>
+                        <input type="number" class="form-control" id="phoneNumber">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="form-label fw-semibold fs-5">Email Address</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+
+                    <!-- ADD ITEM BUTTON -->
+                    <button type="submit" class="btn btn-primary text-end float-end">Give Out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.reflowhq.com/v1/toolkit.min.js" data-reflow-project="267418190"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/Simple-Slider-swiper-bundle.min.js"></script>
+    <script src="assets/js/Simple-Slider.js"></script>
+
+    <script>
+        document.getElementById('itemForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Check if the user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const userData = JSON.parse(localStorage.getItem('userData'));
+
+            if (!isLoggedIn || !userData) {
+                alert('Please log in before giving out an item.');
+                return;
+            }
+
+            const formData = new FormData();
+            const imageFile = document.getElementById('uploadImage').files[0];
+
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
+
+            const payload = {
+                name: document.getElementById('itemName').value,
+                category: document.getElementById('chooseItem').value,
+                description: document.getElementById('itemDescription').value,
+                phone_number: document.getElementById('phoneNumber').value,
+                email: document.getElementById('email').value,
+                location: document.getElementById('location').value,
+                yearsUsed: document.getElementById('yearsUsed').value,
+                username: userData.username
+            };
+
+            formData.append('payload', JSON.stringify(payload));
+
+            try {
+                const response = await fetch('/item/create_item', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert('Item successfully submitted!');
+                    // Further actions can be taken here, like showing the uploaded image in a popup.
+                } else {
+                    alert('Failed to submit item.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the item.');
+            }
+        });
+    </script>
+
+</body>
+
+<footer class="text-center text-white" style="background-color: #3f51b5">
+    <div class="container">
+        <section class="mt-5">
+            <div class="row text-center d-flex justify-content-center pt-5">
+                <div class="col-md-2">
+                    <h6 class="text-uppercase font-weight-bold">
+                        <a href="index.html" class="text-white text-decoration-none">Home</a>
+                    </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="text-uppercase font-weight-bold">
+                        <a href="giftout.html" class="text-white text-decoration-none">Gift Out</a>
+                    </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="text-uppercase font-weight-bold">
+                        <a href="profile.html" class="text-white text-decoration-none">Profile</a>
+                    </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="text-uppercase font-weight-bold">
+                        <a href="about.html" class="text-white text-decoration-none">About</a>
+                    </h6>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+</html>

@@ -65,20 +65,21 @@ router = APIRouter()
 
 
 # create user
-@router.post("/auth/create_user")
-async def create_user(User_data: UserCreation, db: db_dependency):
+@router.post("/auth/create_user")  # done connecting
+async def create_user(db: db_dependency, user: CreateUserSchema = Depends(create_user_schema)):
 
     logger.info("Endpoint : create_user")
 
        # create user 
+    # print(User)
 
-    hashed_password = bcrypt.hashpw(User_data.password.encode('utf-8'), bcrypt.gensalt())
+    hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
     user_data = User(
-                email=User_data.email,
-                firstname=User_data.first_name,
-                lastname =User_data.last_name,
-                username = User_data.first_name + User_data.last_name[0],
-                phone_number=User_data.phone_number,
+                email=user.email,
+                firstname=user.first_name,
+                lastname =user.last_name,
+                username = user.first_name + user.last_name[0],
+                phone_number=user.phone_number,
                 password =hashed_password.decode('utf-8'),
                 role ="USER"
 
@@ -136,11 +137,11 @@ async def create_admin_user( db: db_dependency):
 # login without token
 
 @router.post("/auth/login")
-async def login(login: Login, db: db_dependency):
+async def login( db: db_dependency, user: Login = Depends(login_schema)):
 
     # Query for user data using email
-    user = await db.execute(select(User).where(User.email == login.email))
-    user_data = user.scalar()
+    users = await db.execute(select(User).where(User.email == user.email))
+    user_data = users.scalar()
     
     # Check if the user was found
     if not user_data:
@@ -149,7 +150,7 @@ async def login(login: Login, db: db_dependency):
     logger.info("User data queried successfully")
 
     # Check if the password is valid
-    is_valid = bcrypt.checkpw(login.password.encode('utf-8'), user_data.password.encode('utf-8'))
+    is_valid = bcrypt.checkpw(user.password.encode('utf-8'), user_data.password.encode('utf-8'))
 
     if is_valid:
         logger.info("User login successful")
@@ -243,7 +244,7 @@ async def get_all_users( db: db_dependency):
     users_data = users.scalars().all()
     
     if users_data  is None:
-        raise HTTPException(status_code=200, detail="No user data exists", data = result)
+        raise HTTPException(status_code=200, detail="No user data exists", data = users_data)
     
     return users_data 
     
@@ -324,8 +325,8 @@ async def get_total_number_of_users_by_role(role: str, db: db_dependency):
 # update user by id
 
 
-@router.patch("/auth/update_individual_user_fields/{user_id}")
-async def update_user(user_id: uuid.UUID, db: db_dependency, user_input: UserCreation):
+@router.patch("/auth/update_individual_user_fields/{user_id}") #user_input: UserCreation
+async def update_user(user_id: uuid.UUID, db: db_dependency):
 
     
     logger.info("Endpoint : update_user")
@@ -383,46 +384,4 @@ async def delete_user_by_id(user_id: uuid.UUID, db: db_dependency):
     await db.commit()
 
 
-    return "user deleted successfully"
-
-
-@router.patch("/auth/update_user_field/{user_id}")
-async def update_user_field(user_id: uuid.UUID, user_input: dict, db: db_dependency):
-
-
-
-    logger.info("Endpoint : update_user_filed")
-    
-    
-        # query for user data
-    user_data = await db.get(User, user_id)
-    logger.info("User data queried successfully")
-        
-        # convert user data and user input into a dictionary
-    converted_user_data = user_data.__dict__
-    inputs = user_input
-       
-        # copy converted user data
-    result = converted_user_data.copy() 
-
-        # check if user input key is found in the converted user data, if true initialize the converted use data key with the user inputs value
-    for key, value in inputs.items():
-        if key in result:
-            result[key] = value  
-            
-        # replace the old user data with the new user data
-    for key, value in result.items():
-        setattr(user_data, key, value)
-            
-    logger.info("User data ready for storage")
-        
-        # save user data in database
-    db.add(user_data)
-    await db.commit()
-    await db.refresh(user_data)
-    logger.info("User data updated")
-        
-        
-    return user_data
-    
-
+    return "User deleted successfully"
