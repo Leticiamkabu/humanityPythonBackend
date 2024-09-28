@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from enum import Enum
+from fastapi import Form, Depends
 
 
 class ItemCategory(str, Enum):
@@ -22,14 +23,14 @@ class YearsUsed(str, Enum):
 
 
 
-class Items(BaseModel):
+class Items_Model(BaseModel):
     name: str
-    category: ItemCategory
+    category: str #ItemCategory
     description: str
     phone_number:str
     email: str
     location: str
-    yearsUsed: YearsUsed
+    yearsUsed: str #YearsUsed
     username: str
     # picture: str
 
@@ -44,4 +45,24 @@ class Items(BaseModel):
 
 
 
+def Items_schema(
+    name: str = Form(...),
+    category: str = Form(...),
+    description: str = Form(...),
+    phone_number:str = Form(...),
+    email: str = Form(...),
+    location: str = Form(...),
+    yearsUsed: str = Form(...),
+    username: str = Form(...),
     
+) -> Items_Model:
+    return Items_Model(  # Create an instance of the Login class
+        name = name,
+        category = category,
+        description = description,
+        phone_number = phone_number,
+        email = email,
+        location = location,
+        yearsUsed = yearsUsed,
+        username = username
+    )
