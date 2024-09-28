@@ -68,8 +68,8 @@ router = APIRouter()
 
 
 # Create item
-@router.post("/item/create_item")
-async def create_item(db: db_dependency, item_data: Items):
+@router.post("/item/create_item") #done
+async def create_item(db: db_dependency, item_data: Items_Model): #item_data: Items_Model = Depends(Items_schema)
     logger.info("Endpoint: create_item")
 
     
@@ -85,20 +85,24 @@ async def create_item(db: db_dependency, item_data: Items):
         username=item_data.username,
     )
 
+    print("1")
+    print(new_item_data.name)
     # Add the new item to the database session and commit
     db.add(new_item_data)
+    print("2")
     await db.commit()  # Commit to save the item to get its ID
+    # await db.refresh(new_item_data) 
+
+    # logger.info("Item created and saved in the database with ID: %s", new_item_data.id)
+
     
-
-    logger.info("Item created and saved in the database with ID: %s", new_item_data.id)
-
-    
-    return {"message": "Item creation successful", "item_id": new_item_data.id}
+    return {"message": "Item creation successful", "Item_data" : new_item_data}
 
 
-# Create item
-@router.post("/item/create_item_image")
-async def create_item_image(item_id : str, db: db_dependency, file: UploadFile = File(...)):
+
+# Create item image
+@router.post("/item/create_item_image")   #done
+async def create_item_image(db: db_dependency, item_id : str = Form(...),  file: UploadFile = File(...)):
 
 
     # Validate file type (e.g., images only)
@@ -127,10 +131,11 @@ async def create_item_image(item_id : str, db: db_dependency, file: UploadFile =
         logger.info("Item image created and saved in the database with ID: %s", new_image.id)
 
         return {
-            "message": "Item image creation successful", 
+            "message": "Item image creation successful",
             "item_image_id": new_image.id,
             "filename": file.filename
-        }
+        }             
+
 
     except Exception as e:
         # Handle errors (like commit failures)
@@ -164,7 +169,7 @@ async def create_item_image(item_id : str, db: db_dependency, file: UploadFile =
 
 
 # get all_items
-@router.get("/item/get_all_items")
+@router.get("/item/get_all_items") 
 async def get_all_items( db: db_dependency):
 
     items = await db.execute(select(Item))
@@ -174,10 +179,23 @@ async def get_all_items( db: db_dependency):
         raise HTTPException(status_code=200, detail="No user data exists", data = items_data)
     
     return items_data 
+
+# get all_items_Images
+@router.get("/item/get_items_images_by_id/{item_id}") 
+async def get_items_images_by_id( item_id : str, db: db_dependency):
+
+
+    item_image = await db.execute(select(ItemImage).where(ItemImage.item_id == item_id))
+    item_image_data = item_image.scalar()
+    
+    if item_image_data  is None:
+        raise HTTPException(status_code=200, detail="item with provided name does not exist", data = item_image_data)
+    
+    return item_image_data 
     
 
 # get item by id
-@router.get("/auth/get_item_by_id")
+@router.get("/item/get_item_by_id")
 async def get_item_by_id(item_id: uuid.UUID ,db: db_dependency):
 
     item_data = await db.get(Item, item_id)
@@ -189,8 +207,41 @@ async def get_item_by_id(item_id: uuid.UUID ,db: db_dependency):
     return item_data
 
 
+
+@router.get("/item/get_all_items_with_images")
+async def get_all_items_with_images(db: db_dependency):
+    # Get all items
+    items = await db.execute(select(Item))
+    items_data = items.scalars().all()
+    
+    if not items_data:
+        raise HTTPException(status_code=404, detail="No items found")
+
+    # Prepare a list to hold items with images
+    items_with_images = []
+    
+    for item in items_data:
+        # For each item, get the associated image
+        item_image_query = await db.execute(select(ItemImage).where(ItemImage.item_id == str(item.id)))
+        item_image_data = item_image_query.scalar()
+        
+        # Add item details and image to the result
+        item_info = {
+            "id": item.id,
+            "name": item.name,
+            "description": item.description,
+            "phone_number": item.phone_number,
+            "image": f"data:image/png;base64,{item_image_data.image}" if item_image_data else None,
+            "image_filename": item_image_data.image_filename if item_image_data else None
+        }
+        items_with_images.append(item_info)
+
+    return items_with_images
+
+
+
 # get item by name
-@router.get("/auth/get_item_by_name")
+@router.get("/item/get_item_by_name")
 async def get_item(item_name: str ,db: db_dependency):
 
     item = await db.execute(select(Item).where(Item.name == item_name))
@@ -203,7 +254,7 @@ async def get_item(item_name: str ,db: db_dependency):
 
 
 # get total number of items
-@router.get("/auth/get_total_number_of_items")
+@router.get("/item/get_total_number_of_items")
 async def get_total_number_of_items(db: db_dependency):
 
     result = await db.execute(select(func.count(Item.id)))
@@ -215,8 +266,8 @@ async def get_total_number_of_items(db: db_dependency):
 # update item by id
 
 
-@router.patch("/auth/update_individual_item_fields/{item_id}")
-async def update_item_details(item_id: uuid.UUID, user_input: Items, db: db_dependency):
+@router.patch("/item/update_individual_item_fields/{item_id}")
+async def update_item_details(item_id: uuid.UUID, user_input: Items_Model, db: db_dependency):
 
     
     logger.info("Endpoint : update_user")
@@ -256,7 +307,7 @@ async def update_item_details(item_id: uuid.UUID, user_input: Items, db: db_depe
     return item_data
     
     
-@router.patch("/auth/update_item_image/{item_image_id}")
+@router.patch("/item/update_item_image/{item_image_id}")
 async def update_item_image(item_image_id: uuid.UUID, db: db_dependency, file: UploadFile = File(...)):
 
     
@@ -283,7 +334,7 @@ async def update_item_image(item_image_id: uuid.UUID, db: db_dependency, file: U
 
 
 # delete item by id
-@router.delete("/auth/delete_item_by_id")
+@router.delete("/item/delete_item_by_id")
 async def delete_item_by_id(item_id: uuid.UUID, db: db_dependency):
 
     item = await db.execute(select(Item).where(Item.id == item_id))

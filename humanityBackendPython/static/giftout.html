@@ -42,16 +42,16 @@
             <div class="col-8 gx-5 ps-5 ms-5">
                 <form id="itemForm">
                     <!-- ITEM CATEGORY -->
-                    <label for="chooseItem" class="form-label fw-semibold fs-5">Item Category</label>
-                    <select class="form-select mb-3" id="chooseItem" aria-label="Default select example">
+                    <label for="category" class="form-label fw-semibold fs-5">Item Category</label>
+                    <select class="form-select mb-3" id="category" aria-label="Default select example">
                         <option selected disabled>Choose Item</option>
-                        <option value="Clothes">Clothes</option>
-                        <option value="Home Appliances">Home Appliances</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Furniture">Furniture</option>
-                        <option value="Construction tools">Construction Tools</option>
-                        <option value="Books">Books</option>
-                        <option value="Learning Materials">Learning Materials</option>
+                        <option value="CLOTHS">Clothes</option>
+                        <option value="HOME_APPLIANCES">Home Appliances</option>
+                        <option value="ELECTRONICS">Electronics</option>
+                        <option value="FURNITURE">Furniture</option>
+                        <option value="CONSTRUCTION_TOOLS">Construction Tools</option>
+                        <option value="BOOKS">Books</option>
+                        <option value="LEARNING_MATERIALS">Learning Materials</option>
                     </select>
 
                     <!-- ITEM PICTURE -->
@@ -60,13 +60,13 @@
 
                     <!-- ITEM NAME -->
                     <div class="mb-4">
-                        <label for="itemName" class="form-label fw-semibold fs-5">Item Name</label>
-                        <input type="text" class="form-control" id="itemName">
+                        <label for="name" class="form-label fw-semibold fs-5">Item Name</label>
+                        <input type="text" class="form-control" id="name">
                     </div>
 
                     <div class="mb-4">
-                        <label for="itemDescription" class="form-label fw-semibold fs-5">Item Description</label>
-                        <textarea class="form-control" id="itemDescription" rows="3"></textarea>
+                        <label for="description" class="form-label fw-semibold fs-5">Item Description</label>
+                        <textarea class="form-control" id="description" rows="3"></textarea>
                     </div>
 
                     <div class="mb-4">
@@ -85,14 +85,14 @@
                     <label for="yearsUsed" class="form-label fw-semibold fs-5">Item's Number of Years</label>
                     <select class="form-select mb-4" id="yearsUsed">
                         <option selected disabled>Choose Number of Years Used</option>
-                        <option value="1-5 Years">1 - 5 Years</option>
-                        <option value="6-10 Years">6 - 10 Years</option>
-                        <option value="Above 11 Years">Above 11 Years</option>
+                        <option value="ONE_TO_FIVE_YEARS">1 - 5 Years</option>
+                        <option value="SIX_TO_TEN_YEARS">6 - 10 Years</option>
+                        <option value="ELEVEN_AND_ABOVE">Above 11 Years</option>
                     </select>
 
                     <div class="mb-4">
-                        <label for="phoneNumber" class="form-label fw-semibold fs-5">Mobile Phone Number</label>
-                        <input type="number" class="form-control" id="phoneNumber">
+                        <label for="phone_number" class="form-label fw-semibold fs-5">Mobile Phone Number</label>
+                        <input type="number" class="form-control" id="phone_number">
                     </div>
                     <div class="mb-4">
                         <label for="email" class="form-label fw-semibold fs-5">Email Address</label>
@@ -115,55 +115,118 @@
     <script>
         document.getElementById('itemForm').addEventListener('submit', async function (event) {
             event.preventDefault();
-
+        
             // Check if the user is logged in
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const userData = JSON.parse(localStorage.getItem('userData'));
-
+        
             if (!isLoggedIn || !userData) {
                 alert('Please log in before giving out an item.');
                 return;
             }
-
-            const formData = new FormData();
-            const imageFile = document.getElementById('uploadImage').files[0];
-
-            if (imageFile) {
-                formData.append('image', imageFile);
-            }
-
-            const payload = {
-                name: document.getElementById('itemName').value,
-                category: document.getElementById('chooseItem').value,
-                description: document.getElementById('itemDescription').value,
-                phone_number: document.getElementById('phoneNumber').value,
-                email: document.getElementById('email').value,
+        
+            // Prepare item data as a plain object
+            const itemData = {
+                category: document.getElementById('category').value,
+                name: document.getElementById('name').value,
+                description: document.getElementById('description').value,
                 location: document.getElementById('location').value,
                 yearsUsed: document.getElementById('yearsUsed').value,
-                username: userData.username
+                phone_number: document.getElementById('phone_number').value,
+                email: document.getElementById('email').value,
+                username: userData.username,  // Add the username from localStorage
             };
-
-            formData.append('payload', JSON.stringify(payload));
-
+        
+            let itemId = "";
+        
             try {
+                // Step 1: Create the item
                 const response = await fetch('/item/create_item', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(itemData), // Send JSON data
                 });
-
+        
                 if (response.ok) {
                     const result = await response.json();
                     alert('Item successfully submitted!');
-                    // Further actions can be taken here, like showing the uploaded image in a popup.
+                    
+                    // Get the itemId from the response
+                    itemId = result.Item_data.id;
                 } else {
+                    const errorDetails = await response.json();
+                    console.log('Error details:', errorDetails);
+        
+                    // Log validation error messages
+                    if (Array.isArray(errorDetails.detail)) {
+                        errorDetails.detail.forEach((error, index) => {
+                            console.log(`Validation error ${index + 1}:`, error);
+                        });
+                    }
+        
                     alert('Failed to submit item.');
+                    return; // Stop execution if item creation fails
                 }
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error during item submission:', error);
                 alert('An error occurred while submitting the item.');
+                return; // Stop execution if item creation fails
+            }
+        
+            // Step 2: Upload the item image after the item is created
+            const fileInput = document.getElementById('uploadImage');
+            const file = fileInput.files[0];  // Get the file from input
+        
+            if (!file) {
+                alert('Please select an image to upload.');
+                return;
+            }
+        
+            // Prepare FormData for the image upload
+            const itemImageData = new FormData();
+            itemImageData.append('item_id', itemId); // Attach the itemId from the first request
+            itemImageData.append('file', file);      // Attach the file from input
+        
+            // const itemImageData = {
+            //     item_id: itemId,
+            //     file: file
+            // }
+
+            try {
+                const imageResponse = await fetch('/item/create_item_image', {
+                    method: 'POST',
+                    body: itemImageData, // Send FormData (which handles file uploads)
+                });
+        
+                if (imageResponse.ok) {
+                    const imageResult = await imageResponse.json();
+                    alert('Item image successfully submitted!');
+
+                    // Redirect to another page after successful login
+                    window.location.href = 'index.html';
+                } else {
+                    const errorDetails = await imageResponse.json();
+                    console.log("data",itemImageData)
+                    console.log('Error details during image submission:', errorDetails);
+        
+                    // Log validation error messages
+                    if (Array.isArray(errorDetails.detail)) {
+                        errorDetails.detail.forEach((error, index) => {
+                            console.log(`Validation error ${index + 1}:`, error);
+                        });
+                    }
+        
+                    alert('Failed to submit item image.');
+                }
+            } catch (error) {
+                console.error('Error during image submission:', error);
+                alert('An error occurred while submitting the item image.');
             }
         });
-    </script>
+        </script>
+        
 
 </body>
 

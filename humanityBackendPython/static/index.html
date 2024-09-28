@@ -16,6 +16,32 @@
     <!-- ADDED THIS FOR FIRST SECTION -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
+    <style>
+        .item-card {
+        max-width: 300px; /* Set a fixed width for uniformity */
+        margin: 1rem; /* Add some margin around each card */
+        border: 1px solid #ddd; /* Optional: add a border */
+        border-radius: 0.5rem; /* Optional: add border radius */
+        overflow: hidden; /* Ensure content stays within bounds */
+    }
+
+    .item-image {
+        width: 100%; /* Make image fill the card width */
+        height: 200px; /* Fixed height for uniformity */
+        object-fit: cover; /* Crop image to fit */
+    }
+
+    .pagination {
+        display: flex; /* Use flexbox for pagination layout */
+        justify-content: center; /* Center the buttons */
+        margin-top: 1rem; /* Space above pagination */
+    }
+
+    .pagination button {
+        margin: 0 0.5rem; /* Space between buttons */
+    }
+    </style>
+
 </head>
 
 <body>
@@ -102,7 +128,7 @@
             <div class="swiper-button-next"></div>
     
             <!-- Text and Button on top of the images -->
-            <div class="register-button-container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 10;">
+            <div class="register-button-container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 10; display: none;">
                 <p style="font-size: 24px; font-weight: bold; color: black;">Register to get the chance of giving out items and getting items</p>
                 <a href="/static/register.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 18px;">Register Now</a>
             </div>
@@ -124,24 +150,31 @@
         <div class="row mt-5">
             <div class="col-md-12">
                 <div class="card" style="width: 40rem;">
-                    <div class="row">
-                        <div class="col-6">
-                            <img src="assets/img/girlpic.jpg" class="card-img-top rounded-end-3" alt="..." >
-                        </div>
+                    <!-- <div class="row">
+                        
                         <div class="col-6">
                             <img src="assets/img/girlpic.jpg" class="card-img-top rounded-end-3 float-end" alt="...">
                         </div>
-                    </div>
+                    </div> -->
                     
                     
                     
-                    <div class="card-body">
+                    <!-- <div class="card-body">
                       <h5 class="card-title">Shirts</h5>
                       <p class="card-text ">Shirts at Dansoman.</p>
                       <a href="#" class="btn btn-primary ">0549231075</a>
-                    </div>
+                    </div> -->
+
+
                   </div>
             </div>
+        </div>
+
+        <div id="item-container" class="d-flex flex-wrap justify-content-center"></div>
+
+        <div class="pagination">
+            <button id="prev-btn" class="btn btn-secondary" style="display: none;">Previous</button>
+            <button id="next-btn" class="btn btn-secondary" style="display: none;">Next</button>
         </div>
     </div>
 
@@ -190,6 +223,9 @@
             // Show logged-in links
             document.querySelector('.logged-in-links').style.display = 'flex';
         }
+        else{
+            document.querySelector('.register-button-container').style.display = 'flex';
+        }
 
         // Example of setting login status (you should call this after successful login)
         document.querySelector('.nav-link[href="login.html"]').addEventListener('click', function() {
@@ -199,6 +235,79 @@
         });
     });
 </script>
+
+
+<!-- for pagenation -->
+<script>
+    let currentPage = 1;
+    const itemsPerPage = 5;
+    let allItems = [];
+    
+    async function fetchAllItems() {
+        const response = await fetch('/item/get_all_items_with_images');
+        const data = await response.json();
+        allItems = data; // Store all items/item/get_all_items_with_images
+        renderItems();
+        updatePagination();
+    }
+//     {
+//     "id": "045b675c-a24f-47b2-97e1-950c249d8c97",
+//     "name": "djksd",
+//     "description": "kalsd",
+//     "phone_number": "4356789",
+//     "image": null,
+//     "image_filename": null
+//   },
+    function renderItems() {
+        const container = document.getElementById('item-container');
+        container.innerHTML = ''; // Clear existing items
+        
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const itemsToDisplay = allItems.slice(startIndex, endIndex);
+    
+        itemsToDisplay.forEach(item => {
+            const card = `
+                <div class="item-card">
+                    <img src="${item.image}" class="item-image" alt="${item.name}">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.name}</h5>
+                        <p class="card-text">${item.description}</p>
+                        <a href="#" class="btn btn-primary">${item.phone_number}</a>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += card;
+        });
+    }
+    
+    function updatePagination() {
+        const totalPages = Math.ceil(allItems.length / itemsPerPage);
+        document.getElementById('prev-btn').style.display = currentPage > 1 ? 'block' : 'none';
+        document.getElementById('next-btn').style.display = currentPage < totalPages ? 'block' : 'none';
+    }
+    
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderItems();
+            updatePagination();
+        }
+    });
+    
+    document.getElementById('next-btn').addEventListener('click', () => {
+        const totalPages = Math.ceil(allItems.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderItems();
+            updatePagination();
+        }
+    });
+    
+    // Initial fetch
+    fetchAllItems();
+</script>
+
 
 
 </body>
