@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <nav class="navbar navbar-expand-lg shadow-sm navbar-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/img/Humanity%20Logo.jpg" width="50em" height="50em"> HUMANITY
+                </a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                    <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="login.html">Login</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="giftout.html">Gift Out</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="profile.html">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="about.html">About</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- VERTICAL PILLS TO CONTAINS MAIN MENUS FOR ADMIN -->
+
+    </header>
+    <main>
+        <!-- MODAL FOR EDIT BUTTON -->
+
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control">
+
+                            <label for="firstName">Last Name</label>
+                            <input type="text" class="form-control">
+
+                            <label for="firstName">e-mail</label>
+                            <input type="text" class="form-control">
+
+                            <label for="firstName">Phone Number</label>
+                            <input type="text" class="form-control">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL FOR DELETE BUTTON -->
+        <!-- Button trigger modal -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class=" modal-dialog-centered modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="p fw-bold">Do you really want to Delete this User</div>
+                        <button type="button" class="btn btn-success">Yes</button>
+                        <button type="button" class="btn btn-danger">No</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- END OF EDIT MODAL -->
+
+
+
+
+        <div class="d-flex align-items-start ms-3">
+            <div class="nav flex-column nav-pills me-3 mt-4" id="v-pills-tab" role="tablist"
+                aria-orientation="vertical">
+                <button class="nav-link active" id="v-pills-overview-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-overview" type="button" role="tab" aria-controls="v-pills-overview"
+                    aria-selected="true">Overview</button>
+                <button class="nav-link mt-3" id="v-pills-users-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-users" type="button" role="tab" aria-controls="v-pills-users"
+                    aria-selected="false">Users</button>
+                <button class="nav-link mt-3" id="v-pills-products-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-products" type="button" role="tab" aria-controls="v-pills-products"
+                    aria-selected="false">Products</button>
+
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-overview" role="tabpanel"
+                    aria-labelledby="v-pills-overview-tab">
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+
+                                <!-- ADMIN ADDITION -->
+
+                                <div class="container py-4 main">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col-lg-6 mb-5 mb-lg-0">
+                                            <div class="card cascading-right bg-body-tertiary"
+                                                style="backdrop-filter: blur(30px);">
+                                                <div class="card-body p-5 shadow-5 text-center">
+                                                    <h2 class="mb-5 display-6">Register Admin</h2>
+                                                    <form id="registerForm">
+                                                        <!-- 2 column grid layout with text inputs for the first and last names -->
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-4">
+                                                                <div data-mdb-input-init class="form-outline">
+                                                                    <input type="text" id="form3Example1"
+                                                                        name="first_name" class="form-control"
+                                                                        required />
+                                                                    <label class="form-label" for="form3Example1">First
+                                                                        name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 mb-4">
+                                                                <div data-mdb-input-init class="form-outline">
+                                                                    <input type="text" id="form3Example2"
+                                                                        name="last_name" class="form-control"
+                                                                        required />
+                                                                    <label class="form-label" for="form3Example2">Last
+                                                                        name</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Email input -->
+                                                        <div data-mdb-input-init class="form-outline mb-4">
+                                                            <input type="email" id="form3Example3" name="email"
+                                                                class="form-control" required />
+                                                            <label class="form-label" for="form3Example3">Email
+                                                                address</label>
+                                                        </div>
+
+
+                                                        <!-- Password input -->
+                                                        <div data-mdb-input-init class="form-outline mb-4">
+                                                            <input type="password" id="form3Example5" name="password"
+                                                                class="form-control" required />
+                                                            <label class="form-label"
+                                                                for="form3Example5">Password</label>
+                                                        </div>
+
+
+
+                                                        <!-- Submit button -->
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-block mb-4 fs-6">
+                                                            Register
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 mb-5 mb-lg-0">
+                                            <img src="assets/img/girlpic.jpg" class="w-100 rounded-4 shadow-4" alt="" />
+                                        </div>
+                                    </div>
+
+                                    <!-- GETTING DETAILS OF USERS AND PRODUCTS -->
+                                    <div class="row align-items-center mt-5 pt-5">
+                                        <label for="usersList" class="form-label fw-semibold fs-5">Get Users</label>
+                                        <select class="form-select mb-3" id="category"
+                                            aria-label="Default select example">
+                                            <option selected disabled>Choose Category</option>
+                                            <option value="totalUsers">Total Number of User</option>
+                                            <option value="totalItems">Total Number of Items</option>
+                                            <option value="totalAdmins">Total Number of Admins</option>
+                                        </select>
+
+                                        <!-- The total Number will replace this number here -->
+                                        <div class="p display-6"> 0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- USERS TAB -->
+                <div class="tab-pane fade mt-5 pt-5 ms-5" id="v-pills-users" role="tabpanel"
+                    aria-labelledby="v-pills-users-tab">
+                    <ul class="list-group" style="width: 50em;">
+                        <div class="list-group-item list-group-item-action " aria-current="true">
+                            <div class="d-flex ">
+                                <h5 class="mb-1">Theophilus Bekoe</h5>
+                            </div>
+                            <p class="mb-1">theology75@gmail.com</p>
+                            <div class="float-end">
+                                <button class="button btn-success btn" id="editButton" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Edit</button>
+                                <button class="button btn-success btn" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modalDelete"> Delete</button>
+                            </div>
+                        </div>
+
+                    </ul>
+                </div>
+
+                <!-- PRODUCTS TAB -->
+                <div class="tab-pane fade" id="v-pills-products" role="tabpanel" aria-labelledby="v-pills-products-tab">
+
+                    <ul class="list-group" style="width: 50em;">
+                        <div class="list-group-item list-group-item-action " aria-current="true">
+
+
+                            <!-- CARD CONTAINING ITEMS -->
+                            <div class="card" style="width: 18rem;">
+                                <img src="assets/img/girlpic.jpg" style="height: 10em;" ; class="card-img-top "
+                                    alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the card's content.</p>
+
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="float-end card-footer">
+                                <button class="button btn-success btn" id="editButton" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Edit</button>
+                                <button class="button btn-success btn" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modalDelete"> Delete</button>
+                            </div>
+
+                    </ul>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+<script>
+    var editButton = document.querySelector('#editButton');
+
+    editButton.addEventListener('click', function () {
+        console.log("Button clicked");
+    });
+
+</script>
+
+</html>
+
+<!-- 
+hi, please start creating the admin dashboard, the following are the things the admin would be able to do on the dashboard 
+
+
+
+register admins
+
+update user details by id
+
+get all users
+
+get user details by id
+
+get user details by username
+
+get users by role
+
+get total number of users
+
+
+get number of users by role
+
+get all profile
+
+delete profile
+
+# get all items
+
+# get total number of items
+
+# get item by id
+
+
+# get item by name
+
+
+
+thank you😊
+-->
