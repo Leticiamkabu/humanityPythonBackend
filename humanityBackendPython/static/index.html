@@ -18,28 +18,40 @@
 
     <style>
         .item-card {
-        max-width: 300px; /* Set a fixed width for uniformity */
-        margin: 1rem; /* Add some margin around each card */
-        border: 1px solid #ddd; /* Optional: add a border */
-        border-radius: 0.5rem; /* Optional: add border radius */
-        overflow: hidden; /* Ensure content stays within bounds */
-    }
+            max-width: 300px;
+            /* Set a fixed width for uniformity */
+            margin: 1rem;
+            /* Add some margin around each card */
+            border: 1px solid #ddd;
+            /* Optional: add a border */
+            border-radius: 0.5rem;
+            /* Optional: add border radius */
+            overflow: hidden;
+            /* Ensure content stays within bounds */
+        }
 
-    .item-image {
-        width: 100%; /* Make image fill the card width */
-        height: 200px; /* Fixed height for uniformity */
-        object-fit: cover; /* Crop image to fit */
-    }
+        .item-image {
+            width: 100%;
+            /* Make image fill the card width */
+            height: 200px;
+            /* Fixed height for uniformity */
+            object-fit: cover;
+            /* Crop image to fit */
+        }
 
-    .pagination {
-        display: flex; /* Use flexbox for pagination layout */
-        justify-content: center; /* Center the buttons */
-        margin-top: 1rem; /* Space above pagination */
-    }
+        .pagination {
+            display: flex;
+            /* Use flexbox for pagination layout */
+            justify-content: center;
+            /* Center the buttons */
+            margin-top: 1rem;
+            /* Space above pagination */
+        }
 
-    .pagination button {
-        margin: 0 0.5rem; /* Space between buttons */
-    }
+        .pagination button {
+            margin: 0 0.5rem;
+            /* Space between buttons */
+        }
     </style>
 
 </head>
@@ -108,34 +120,80 @@
         </div>
     </div> -->
 
-<!-- ADDED THIS FOR FIRST SECTION -->
+
+    <!-- replaced the top part -->
+
+    <!-- ADDED THIS FOR FIRST SECTION -->
     <div class="simple-slider">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat; position: relative;">
-                    <img src="assets/img/indexSectionImage1.png" style="width: 100%; height: auto;">
+                <div class="swiper-slide h-50">
+                    <img src="assets/img/donate1.jpg" style="width:100%; height:100%;" class="h-50">
                 </div>
-                <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat; position: relative;">
-                    <img src="assets/img/indexSection2.jpg" style="width: 100%; height: auto;">
+                <div class="swiper-slide h-50">
+                    <img src="assets/img/donate2.jpg" style="width:100%; height: 100%;" class="h-50">
 
                 </div>
-                <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat; position: relative;">
-                    <img src="assets/img/indexSection3.webp" style="width: 100%; height: auto;">
-                </div>
+
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
-    
+
             <!-- Text and Button on top of the images -->
-            <div class="register-button-container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 10; display: none;">
-                <p style="font-size: 24px; font-weight: bold; color: black;">Register to get the chance of giving out items and getting items</p>
-                <a href="/static/register.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 18px;">Register Now</a>
+            <div class="register-button-container"
+                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 10; display: none;">
+                <p style="font-size: 24px; font-weight: bold; color: black;">Register to get the chance of giving out
+                    items and getting items</p>
+                <a href="/static/register.html" class="btn btn-primary"
+                    style="padding: 10px 20px; font-size: 18px;">Register Now</a>
             </div>
         </div>
     </div>
-    
-<!--  -->
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="assets/img/about.jpg" alt=""
+                            style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <h6 class="section-title bg-white text-start text-primary pe-3">About Us</h6>
+                    <h1 class="mb-4">Welcome to HUMANITY</h1>
+                    <p class="mb-4">This is where you help make a better world.
+                        is not damaged</p>
+                    <p class="mb-4">By committin to this duty of the world, you help make the world safer.</p>
+                    <div class="row gy-2 gx-4 mb-4">
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Donate to people of your
+                                community, to make the world better place to live in</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate
+                            </p>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="container mt-5">
@@ -145,20 +203,37 @@
                 <div data-reflow-type="product-list" data-reflow-order="date_desc"></div>
             </div>
         </div>
-        
+        <div class="row">
+            <div class="col-6">
+                <div class="display-6">
+                     <label for="location" class="form-label fw-semibold fs-5">Enter Location</label>
+                        <select class="form-select mb-4" id="location">
+                            <option selected disabled>Choose Location</option>
+                            <option value="Jumapo">Jumapo</option>
+                            <option value="Suhyen">Suhyen</option>
+                            <option value="Okrase">Okrase</option>
+                            <option value="Poly Junction">Poly Junction</option>
+                            <option value="Mile 50">Mile 50</option>
+                            <option value="Jackson Park">Jackson Park</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- LIST OF GIFTS HERE -->
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <div class="card" style="width: 40rem;">
+        <div class="row mt-5" >
+            <div class="col-12">
+                <div class="card" style="width: 100em;">
                     <!-- <div class="row">
                         
                         <div class="col-6">
                             <img src="assets/img/girlpic.jpg" class="card-img-top rounded-end-3 float-end" alt="...">
                         </div>
                     </div> -->
-                    
-                    
-                    
+
+
+
                     <!-- <div class="card-body">
                       <h5 class="card-title">Shirts</h5>
                       <p class="card-text ">Shirts at Dansoman.</p>
@@ -166,7 +241,7 @@
                     </div> -->
 
 
-                  </div>
+                </div>
             </div>
         </div>
 
@@ -185,6 +260,79 @@
             <div class="col-4"></div>
         </div>
     </div>
+
+    <footer class="text-center text-white" style="background-color: #3f51b5">
+        <!-- Grid container -->
+        <div class="container">
+            <!-- Section: Links -->
+            <section class="mt-5">
+                <!-- Grid row-->
+                <div class="row text-center d-flex justify-content-center pt-5">
+                    <!-- Grid column -->
+                    <div class="col-md-2">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <a href="index.html" class="text-white text-decoration-none">Home</a>
+                        </h6>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <a href="giftout.html" class="text-white text-decoration-none">Gift Out</a>
+                        </h6>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <a href="profile.html" class="text-white text-decoration-none">Profile</a>
+                        </h6>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <a href="about.html" class="text-white text-decoration-none">About</a>
+                        </h6>
+                    </div>
+                    <!-- Grid column -->
+
+
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row-->
+            </section>
+            <!-- Section: Links -->
+
+            <hr class="my-5" />
+
+            <!-- Section: Text -->
+            <section class="mb-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <p>
+                            At HUMANITY, we pride ourselves as being the best Humanitariran institution
+                            ensuring that everybody in <b>Koforidua </b> is a winner and blessing by sharing their extra
+                            or unused
+                            items to those in need.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2024 Copyright:
+            <a class="text-white text-decoration-none" href="https://facebook.com/theokhay">humanity.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.reflowhq.com/v1/toolkit.min.js" data-reflow-project="267418190"></script>
     <script src="assets/js/bs-init.js"></script>
@@ -213,100 +361,100 @@
         });
     </script>
 
-<!-- for nav -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Simulating login status
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
+    <!-- for nav -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Simulating login status
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
 
-        if (isLoggedIn === 'true') {
-            // Show logged-in links
-            document.querySelector('.logged-in-links').style.display = 'flex';
-        }
-        else{
-            document.querySelector('.register-button-container').style.display = 'flex';
-        }
+            if (isLoggedIn === 'true') {
+                // Show logged-in links
+                document.querySelector('.logged-in-links').style.display = 'flex';
+            }
+            else {
+                document.querySelector('.register-button-container').style.display = 'flex';
+            }
 
-        // Example of setting login status (you should call this after successful login)
-        document.querySelector('.nav-link[href="login.html"]').addEventListener('click', function() {
-            // After login success, set the login status and refresh the page
-            localStorage.setItem('isLoggedIn', 'true');
-            window.location.reload();
+            // Example of setting login status (you should call this after successful login)
+            document.querySelector('.nav-link[href="login.html"]').addEventListener('click', function () {
+                // After login success, set the login status and refresh the page
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.reload();
+            });
         });
-    });
-</script>
+    </script>
 
 
-<!-- for pagenation -->
-<script>
-    let currentPage = 1;
-    const itemsPerPage = 5;
-    let allItems = [];
-    
-    async function fetchAllItems() {
-        const response = await fetch('/item/get_all_items_with_images');
-        const data = await response.json();
-        allItems = data; // Store all items/item/get_all_items_with_images
-        renderItems();
-        updatePagination();
-    }
-//     {
-//     "id": "045b675c-a24f-47b2-97e1-950c249d8c97",
-//     "name": "djksd",
-//     "description": "kalsd",
-//     "phone_number": "4356789",
-//     "image": null,
-//     "image_filename": null
-//   },
-    function renderItems() {
-        const container = document.getElementById('item-container');
-        container.innerHTML = ''; // Clear existing items
-        
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const itemsToDisplay = allItems.slice(startIndex, endIndex);
-    
-        itemsToDisplay.forEach(item => {
-            const card = `
-                <div class="item-card">
+    <!-- for pagenation -->
+    <script>
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let allItems = [];
+
+        async function fetchAllItems() {
+            const response = await fetch('/item/get_all_items_with_images');
+            const data = await response.json();
+            allItems = data; // Store all items/item/get_all_items_with_images
+            renderItems();
+            updatePagination();
+        }
+        //     {
+        //     "id": "045b675c-a24f-47b2-97e1-950c249d8c97",
+        //     "name": "djksd",
+        //     "description": "kalsd",
+        //     "phone_number": "4356789",
+        //     "image": null,
+        //     "image_filename": null
+        //   },
+        function renderItems() {
+            const container = document.getElementById('item-container');
+            container.innerHTML = ''; // Clear existing items
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const itemsToDisplay = allItems.slice(startIndex, endIndex);
+
+            itemsToDisplay.forEach(item => {
+                const card = `
+                <div class="item-card w-100 px-5 mx-5" style="width:200em">
                     <img src="${item.image}" class="item-image" alt="${item.name}">
-                    <div class="card-body">
+                    <div class="card-body" style="width:100%">
                         <h5 class="card-title">${item.name}</h5>
                         <p class="card-text">${item.description}</p>
                         <a href="#" class="btn btn-primary">${item.phone_number}</a>
                     </div>
                 </div>
             `;
-            container.innerHTML += card;
+                container.innerHTML += card;
+            });
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(allItems.length / itemsPerPage);
+            document.getElementById('prev-btn').style.display = currentPage > 1 ? 'block' : 'none';
+            document.getElementById('next-btn').style.display = currentPage < totalPages ? 'block' : 'none';
+        }
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderItems();
+                updatePagination();
+            }
         });
-    }
-    
-    function updatePagination() {
-        const totalPages = Math.ceil(allItems.length / itemsPerPage);
-        document.getElementById('prev-btn').style.display = currentPage > 1 ? 'block' : 'none';
-        document.getElementById('next-btn').style.display = currentPage < totalPages ? 'block' : 'none';
-    }
-    
-    document.getElementById('prev-btn').addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            renderItems();
-            updatePagination();
-        }
-    });
-    
-    document.getElementById('next-btn').addEventListener('click', () => {
-        const totalPages = Math.ceil(allItems.length / itemsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            renderItems();
-            updatePagination();
-        }
-    });
-    
-    // Initial fetch
-    fetchAllItems();
-</script>
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            const totalPages = Math.ceil(allItems.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderItems();
+                updatePagination();
+            }
+        });
+
+        // Initial fetch
+        fetchAllItems();
+    </script>
 
 
 
