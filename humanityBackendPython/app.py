@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
-from controllers import authenticationController, itemController
+from controllers import authenticationController, itemController, profileController
 from fastapi_login import LoginManager
 
 
@@ -59,5 +59,6 @@ app.add_middleware(
 
 
 app.include_router(authenticationController.router, tags=["Authentication"]),
-app.include_router(itemController.router, tags=["Items"])
+app.include_router(itemController.router, tags=["Items"]),
+app.include_router(profileController.router, tags=["Profile"])
 

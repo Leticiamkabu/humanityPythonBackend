@@ -28,6 +28,9 @@
                     <li class="nav-item"><a class="nav-link active" href="giftout.html">Gift Out</a></li>
                     <li class="nav-item"><a class="nav-link active" href="profile.html">Profile</a></li>
                     <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html" onclick="logout()">Log out</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -226,6 +229,20 @@
             }
         });
         </script>
+
+<script>
+    function logout() {
+    // Clear the localStorage
+    localStorage.clear();
+    
+    // Optionally, set loginStatus to false if that's what you're tracking
+    localStorage.setItem('loginStatus', 'false');
+    
+    // Redirect to the index page
+    window.location.href = 'index.html';
+}
+
+</script>
         
 
 </body>

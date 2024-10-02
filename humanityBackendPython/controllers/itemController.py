@@ -68,7 +68,7 @@ router = APIRouter()
 
 
 # Create item
-@router.post("/item/create_item") #done
+@router.post("/item/create_item") #done and used
 async def create_item(db: db_dependency, item_data: Items_Model): #item_data: Items_Model = Depends(Items_schema)
     logger.info("Endpoint: create_item")
 
@@ -101,7 +101,7 @@ async def create_item(db: db_dependency, item_data: Items_Model): #item_data: It
 
 
 # Create item image
-@router.post("/item/create_item_image")   #done
+@router.post("/item/create_item_image")   #done and used
 async def create_item_image(db: db_dependency, item_id : str = Form(...),  file: UploadFile = File(...)):
 
 
@@ -195,20 +195,43 @@ async def get_items_images_by_id( item_id : str, db: db_dependency):
     
 
 # get item by id
-@router.get("/item/get_item_by_id")
-async def get_item_by_id(item_id: uuid.UUID ,db: db_dependency):
+from fastapi import HTTPException
+from sqlalchemy.future import select
+import uuid
 
-    item_data = await db.get(Item, item_id)
+@router.get("/item/get_item_by_id/{item_id}")
+async def get_item_by_id(item_id: uuid.UUID, db: db_dependency):
+    # Get the item by its ID
+    item = await db.get(Item, item_id)
     
+    if item is None:
+        raise HTTPException(status_code=404, detail="Item with the given ID does not exist")
+
+    # Fetch the corresponding image
+    item_image_query = await db.execute(select(ItemImage).where(ItemImage.item_id == str(item_id)))
+    item_image_data = item_image_query.scalar()
+
+    if item_image_data is None:
+        raise HTTPException(status_code=404, detail="Item image with the given ID does not exist")
     
-    if item_data  is None:
-        raise HTTPException(status_code=200, detail="item with id does not exist", data = item_data)
+    # Create the item information object
+    item_info = {
+        "id": str(item.id),
+        "name": item.name,
+        "description": item.description,
+        "phone_number": item.phone_number,
+        "location": item.location,
+        "image": f"data:image/png;base64,{item_image_data.image}" if item_image_data.image else None,
+        "image_filename": item_image_data.image_filename if item_image_data.image_filename else None
+    }
+
+    return item_info  # Return the item information as a dictionary
+
     
-    return item_data
 
 
 
-@router.get("/item/get_all_items_with_images")
+@router.get("/item/get_all_items_with_images") # done and used
 async def get_all_items_with_images(db: db_dependency):
     # Get all items
     items = await db.execute(select(Item))
@@ -231,6 +254,42 @@ async def get_all_items_with_images(db: db_dependency):
             "name": item.name,
             "description": item.description,
             "phone_number": item.phone_number,
+            "image": f"data:image/png;base64,{item_image_data.image}" if item_image_data else None,
+            "image_filename": item_image_data.image_filename if item_image_data else None
+        }
+        items_with_images.append(item_info)
+
+    return items_with_images
+
+
+
+@router.get("/item/get_all_items_with_images_by_username/{username}") # 
+async def get_all_items_with_images_by_username(username: str , db: db_dependency):
+    # Get all items
+    items = await db.execute(select(Item).where(Item.username == username))
+    items_data = items.scalars().all()
+    
+    if not items_data:
+        raise HTTPException(status_code=404, detail="No items found")
+
+    # Prepare a list to hold items with images
+    items_with_images = []
+    
+    for item in items_data:
+        # For each item, get the associated image
+        item_image_query = await db.execute(select(ItemImage).where(ItemImage.item_id == str(item.id)))
+        item_image_data = item_image_query.scalar()
+        
+        # Add item details and image to the result
+        item_info = {
+            "id": item.id,
+            "name": item.name,
+            "description": item.description,
+            "phone_number": item.phone_number,
+            "category": item.category,
+            "email" : item.email,
+            "yearsUsed" : item.yearsUsed,
+            "location" : item.location,
             "image": f"data:image/png;base64,{item_image_data.image}" if item_image_data else None,
             "image_filename": item_image_data.image_filename if item_image_data else None
         }
@@ -267,20 +326,23 @@ async def get_total_number_of_items(db: db_dependency):
 
 
 @router.patch("/item/update_individual_item_fields/{item_id}")
-async def update_item_details(item_id: uuid.UUID, user_input: Items_Model, db: db_dependency):
+async def update_item_details(item_id: str, user_input: dict, db: db_dependency):
 
     
     logger.info("Endpoint : update_user")
     
-
+# await db.execute(select(Item).where(str(Item.id) == item_id))
     # query for user data
-    item_data = await db.get(Item, item_id)
+    item = await db.execute(select(Item).where(Item.id == uuid.UUID(item_id)))
+    item_data = item.scalar() 
+    print(item_data)
+    print(item_data.id)
     logger.info("User data queried successfully")
 
         
     # convert user data and user input into a dictionary
     converted_item_data = item_data.__dict__
-    inputs = user_input.__dict__
+    inputs = user_input
        
         # copy converted user data
     result = converted_item_data.copy() 
@@ -306,6 +368,8 @@ async def update_item_details(item_id: uuid.UUID, user_input: Items_Model, db: d
         
     return item_data
     
+
+
     
 @router.patch("/item/update_item_image/{item_image_id}")
 async def update_item_image(item_image_id: uuid.UUID, db: db_dependency, file: UploadFile = File(...)):
@@ -334,10 +398,10 @@ async def update_item_image(item_image_id: uuid.UUID, db: db_dependency, file: U
 
 
 # delete item by id
-@router.delete("/item/delete_item_by_id")
-async def delete_item_by_id(item_id: uuid.UUID, db: db_dependency):
+@router.delete("/item/delete_item_by_id/{item_id}")
+async def delete_item_by_id(item_id: str, db: db_dependency):
 
-    item = await db.execute(select(Item).where(Item.id == item_id))
+    item = await db.execute(select(Item).where(Item.id == uuid.UUID(item_id)))
     item_data = item.scalar_one_or_none()
     
     if item_data is None:

@@ -82,12 +82,26 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="giftout.html">Gift Out</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link active" href="profile.html">Profile</a>
+                        </li> -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Profile
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="profile.html#editProfile">Edit Profile</a></li>
+                                <li><a class="dropdown-item" href="profile.html#editItems">Edit Items</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="about.html">About</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html" onclick="logout()">Log out</a>
+                        </li>
+                        
                     </div>
                 </ul>
             </div>
@@ -129,8 +143,8 @@
     
             <!-- Text and Button on top of the images -->
             <div class="register-button-container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 10; display: none;">
-                <p style="font-size: 24px; font-weight: bold; color: black;">Register to get the chance of giving out items and getting items</p>
-                <a href="/static/register.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 18px;">Register Now</a>
+                <p style="font-size: 24px;font-weight: bold;color: #050e32;background-color: #b2d9eb">Register to get the chance of giving out items and getting items</p>
+                <a href="/static/register.html" class="btn btn-primary" style="padding: 10px 20px;font-size: 18px;position: relative;top: 70px;right: 320px;">Register Now</a>
             </div>
         </div>
     </div>
@@ -147,9 +161,9 @@
         </div>
         
         <!-- LIST OF GIFTS HERE -->
-        <div class="row mt-5">
+        <!-- <div class="row mt-5">
             <div class="col-md-12">
-                <div class="card" style="width: 40rem;">
+                <div class="card" style="width: 40rem;"> -->
                     <!-- <div class="row">
                         
                         <div class="col-6">
@@ -165,10 +179,10 @@
                       <a href="#" class="btn btn-primary ">0549231075</a>
                     </div> -->
 
-
+<!-- 
                   </div>
             </div>
-        </div>
+        </div> -->
 
         <div id="item-container" class="d-flex flex-wrap justify-content-center"></div>
 
@@ -239,6 +253,8 @@
 
 <!-- for pagenation -->
 <script>
+
+const confirmation = confirm("Kindly ensure the removal of any unavailable items. Thank you. :)");
     let currentPage = 1;
     const itemsPerPage = 5;
     let allItems = [];
@@ -270,10 +286,10 @@
             const card = `
                 <div class="item-card">
                     <img src="${item.image}" class="item-image" alt="${item.name}">
-                    <div class="card-body">
+                    <div class="card-body"uuid.UUID>
                         <h5 class="card-title">${item.name}</h5>
                         <p class="card-text">${item.description}</p>
-                        <a href="#" class="btn btn-primary">${item.phone_number}</a>
+                        <a href="item_page.html?id=${item.id}" class="btn btn-primary">Get Item</a>
                     </div>
                 </div>
             `;
@@ -308,6 +324,19 @@
     fetchAllItems();
 </script>
 
+<script>
+    function logout() {
+    // Clear the localStorage
+    localStorage.clear();
+    
+    // Optionally, set loginStatus to false if that's what you're tracking
+    localStorage.setItem('loginStatus', 'false');uuiuuid.UUIDd.UUID
+    
+    // Redirect to the index page
+    window.location.href = 'index.html';
+}
+
+</script>
 
 
 </body>

@@ -12,28 +12,55 @@
     <link rel="stylesheet" href="assets/css/Simple-Slider-swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/css/Simple-Slider.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+
+    <style>
+        /* #selectedAvatar {
+            border: 2.5px solid black; /* Solid black border */
+            /* border-radius: 50%; Ensure circular shape */
+            /* text-overflow: "not set"; */
+        /* }  */
+
+        .placeholder-text {
+            position: absolute;
+            color: white; /* Change to your desired text color */
+            font-size: 1.5em; /* Adjust the font size as needed */
+            text-align: center;
+            display: none; /* Hide by default */
+        }
+
+        /* Show placeholder text when no image is available */
+        /* #selectedAvatar:empty + .placeholder-texts {
+            display: flex;
+        } */
+        
+        </style>
+
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-lg shadow-sm navbar-light">
-            <div class="container"><a class="navbar-brand" href="index.html"><img src="assets/img/Humanity%20Logo.jpg"
-                        width="50em" height="50em">HUMANITY</a><button data-bs-toggle="collapse" class="navbar-toggler"
-                    data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span
-                        class="navbar-toggler-icon"></span></button>
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/img/Humanity%20Logo.jpg" width="50em" height="50em">HUMANITY
+                </a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
                         <li class="nav-item"><a class="nav-link active" href="giftout.html">Gift Out</a></li>
                         <li class="nav-item"><a class="nav-link active" href="profile.html">Profile</a></li>
                         <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
-
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html" onclick="logout()">Log out</a>
+                        </li>
                     </ul>
-
                 </div>
             </div>
         </nav>
-
     </header>
 
     <main>
@@ -47,25 +74,26 @@
                     <div class="modal-body p-4">
                         <img src="assets/img/girlpic.jpg" alt="avatar"
                             class="rounded-circle position-absolute top-0 start-50 translate-middle h-50" />
-                        <form>
+                        <form id = "updateProfile">
                             <div>
                                 <div class="col mt-5 pt-5 gy-2">
                                     <div data-mdb-input-init class="form-outline">
-                                        <input type="text" id="form3Example1" class="form-control" />
+                                        <input type="text" id="firstname" class="form-control" />
                                         <label class="form-label" for="form3Example1">First name</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div data-mdb-input-init class="form-outline">
-                                        <input type="text" id="form3Example2" class="form-control" />
+                                        <input type="text" id="lastname" class="form-control" />
                                         <label class="form-label" for="form3Example2">Last name</label>
                                     </div>
                                 </div>
+
                             </div>
 
                             <!-- Email input -->
                             <div data-mdb-input-init class="form-outline mb-4">
-                                <input type="email" id="form3Example3" class="form-control" />
+                                <input type="email" id="email" class="form-control" />
                                 <label class="form-label" for="form3Example3">Email address</label>
                             </div>
 
@@ -81,165 +109,157 @@
         <!-- Modal -->
 
 
+        <!-- !-- EDIT PROFILE IMAGE MODAL -->
+        <!-- Modal -->
+        <div class="modal top fade" id="profileImageModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+            <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center">
+                <div class="modal-content w-75">
+                    <div class="modal-body p-4">
+                        <img src="assets/img/girlpic.jpg" alt="avatar"
+                            class="rounded-circle position-absolute top-0 start-50 translate-middle h-50" />
+                        <form id = "updateProfileImageModel">
+                            <div>
+                                
+                                <!-- ITEM PICTURE -->
+                                <label for="uploadUpdatedProfileImage" class="form-label fw-semibold fs-5 mt-3">Upload Profile Picture</label>
+                                <input type="file" id="uploadUpdatedProfileImage" class="form-control mb-4">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="login.html">Log out</a>
+                                </li>
+
+                            </div>
+
+                            
+
+                            <!-- Submit button -->
+                            <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                                class="btn btn-primary">Save</button>
+
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Modal -->
+
+
 
 
 
 
         <!-- Working Modal -->
-        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="updateItemModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Update Item</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <!-- THIS WILL CONTAIN THE ITEMS THINGS FOR EDITING -->
-
-
                             <div class="row">
                                 <div class="col">
-                                    <form>
-                                        <!-- ITEM CATEGORY -->
-                                        <label for="chooseItem" class="form-label fw-semibold fs-5">Item
-                                            Category</label>
-
-                                        <select class="form-select mb-3" aria-label="Default select example">
-                                            <option selected disabled>Choose Item</option>
-                                            <option value="1">Clothes</option>
-                                            <option value="2">Home Appliances</option>
-                                            <option value="3">Electronics</option>
-                                            <option value="4">Furniture</option>
-                                            <option value="5">Construction tools</option>
-                                            <option value="6">Books</option>
-                                            <option value="7">Learning Materials</option>
-                                        </select>
-
-                                        <!-- ITEM PICTURE -->
-
-                                        <label for="uploadImage" class="form-label fw-semibold fs-5 mt-3">Upload Images
-                                            of
-                                            Items</label>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div>
-                                                    <div class="d-flex justify-content-start mb-4">
-                                                        <img id="selectedAvatar" src="assets/img/girlpic.jpg"
-                                                            class="rounded-circle"
-                                                            style="width: 200px; height: 200px; object-fit: cover;"
-                                                            alt="example placeholder" />
-                                                    </div>
-                                                    <div class="d-flex justify-content-start mb-4">
-                                                        <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
-                                                            <label class="form-label text-white m-1"
-                                                                for="customFile2">Choose file</label>
-                                                            <input type="file" class="form-control d-none"
-                                                                id="customFile2"
-                                                                onchange="displaySelectedImage(event, 'selectedAvatar')" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div>
-                                                    <div class="d-flex justify-content-start mb-4">
-                                                        <img id="selectedAvatar" src="assets/img/girlpic.jpg"
-                                                            class="rounded-circle"
-                                                            style="width: 200px; height: 200px; object-fit: cover;"
-                                                            alt="example placeholder" />
-                                                    </div>
-                                                    <div class="d-flex justify-content-start mb-4">
-                                                        <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
-                                                            <label class="form-label text-white m-1"
-                                                                for="customFile2">Choose file</label>
-                                                            <input type="file" class="form-control d-none"
-                                                                id="customFile2"
-                                                                onchange="displaySelectedImage(event, 'selectedAvatar')" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                    <form id="editItemForm">
+                                        <div class="mb-4">
+                                            <!-- ITEM CATEGORY -->
+                                            <label for="category" class="form-label fw-semibold fs-5">Item Category</label>
+                                            <select class="form-select mb-3" id="categorys" required>
+                                                <option selected disabled>Choose Item</option>
+                                                <option value="CLOTHS">Clothes</option>
+                                                <option value="HOME_APPLIANCES">Home Appliances</option>
+                                                <option value="ELECTRONICS">Electronics</option>
+                                                <option value="FURNITURE">Furniture</option>
+                                                <option value="CONSTRUCTION_TOOLS">Construction tools</option>
+                                                <option value="BOOKS">Books</option>
+                                                <option value="LEARNING_MATERIALS">Learning Materials</option>
+                                            </select>
                                         </div>
+                                        
+                                        <!-- ITEM PICTURE -->
+                                            <label for="imageUpload" class="form-label fw-semibold fs-5 mt-3">Upload Images of Items</label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="d-flex justify-content-start mb-4">
+                                                        <img id="image" src="assets/img/default.jpg" class="rounded-circle"
+                                                            style="width: 200px; height: 200px; object-fit: cover; border: 2px solid #ccc;" 
+                                                            alt="Item Image" />
+                                                    </div>
+                                                    <div class="d-flex justify-content-start mb-4">
+                                                        <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                                                            <label class="form-label text-white m-1" for="imageUpload">Choose file</label>
+                                                            <input type="file" class="form-control d-none" id="imageUpload" 
+                                                                onchange="displaySelectedImage(event, 'image')" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-
-
+        
                                         <!-- ITEM NAME -->
                                         <div class="mb-4">
-                                            <label for="itemName" class="form-label fw-semibold fs-5">Item Name</label>
-                                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                                aria-describedby="emailHelp">
+                                            <label for="name" class="form-label fw-semibold fs-5">Item Name</label>
+                                            <input type="text" class="form-control" id="name" required>
                                         </div>
-
+        
                                         <div class="mb-4">
-                                            <label for="exampleFormControlTextarea1"
-                                                class="form-label fw-semibold fs-5">Item
-                                                Desciption</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                rows="3"></textarea>
+                                            <label for="description" class="form-label fw-semibold fs-5">Item Description</label>
+                                            <textarea class="form-control" id="description" rows="3" required></textarea>
                                         </div>
-
+        
                                         <div class="mb-4">
-                                            <label for="location" class="form-label fw-semibold fs-5">Your
-                                                Location</label>
-                                            <select class="form-select mb-4" aria-label="Default select example">
+                                            <label for="location" class="form-label fw-semibold fs-5">Your Location</label>
+                                            <select class="form-select mb-4" id="location" required>
                                                 <option selected disabled>Choose Location in Koforidua</option>
-                                                <option value="1">Jumapo</option>
-                                                <option value="2">Suhyen</option>
-                                                <option value="3">Okrase</option>
-                                                <option value="4">Okrase</option>
-                                                <option value="5">Poly Junction</option>
-                                                <option value="6">Mile 50</option>
-                                                <option value="7">Jackson Park</option>
+                                                <option value="Jumapo">Jumapo</option>
+                                                <option value="Suhyen">Suhyen</option>
+                                                <option value="Okrase">Okrase</option>
+                                                <option value="Poly Junction">Poly Junction</option>
+                                                <option value="Mile 50">Mile 50</option>
+                                                <option value="Jackson Park">Jackson Park</option>
+                                            </select>
+                                        </div>
+        
+                                        <div class="mb-4">
+                                            <label for="yearsUsed" class="form-label fw-semibold fs-5">Item's Number of Years Used</label>
+                                            <select class="form-select mb-4" id="yearsUsed" required>
+                                                <option selected disabled>Choose Number of Years Used</option>
+                                                <option value="ONE_TO_FIVE_YEARS">1 - 5 Years</option>
+                                                <option value="SIX_TO_TEN_YEARS">6 - 10 Years</option>
+                                                <option value="ELEVEN_AND_ABOVE">Above 10 Years</option>
                                             </select>
                                         </div>
 
-
-                                        <label for="yearsused" class="form-label fw-semibold fs-5">Item's Number of
-                                            Years</label>
-                                        <select class="form-select mb-4" aria-label="Default select example">
-                                            <option selected disabled>Choose Number of Years Used </option>
-                                            <option value="1">1 - 5 Years</option>
-                                            <option value="2">6 - 19 Years</option>
-                                            <option value="3">Above 11 Years</option>
-                                        </select>
-
                                         <div class="mb-4">
-                                            <label for="itemName" class="form-label fw-semibold fs-5">Mobile Phone
-                                                Number</label>
-                                            <input type="number" class="form-control" id="exampleInputEmail1"
-                                                aria-describedby="emailHelp">
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="itemName" class="form-label fw-semibold fs-5">Email
-                                                Address</label>
-                                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                                aria-describedby="emailHelp">
+                                            <label for="phone_number" class="form-label fw-semibold fs-5">Mobile Phone Number</label>
+                                            <input type="tel" class="form-control" id="phone_number" required>
                                         </div>
 
-                                        <!-- ADD ITEM BUTTTON -->
+                                        <div class="mb-4">
+                                            <label for="email" class="form-label fw-semibold fs-5">Email Address</label>
+                                            <input type="email" class="form-control" id="emails" required>
+                                        </div>
 
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" id="submitUpdatedItem">Save changes</button>
+                                        </div>
                                     </form>
                                 </div>
-
                             </div>
-
-
                         </div>
-
-
-
                     </div>
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <!-- SAVE EDITING OF ITEM -->
-                        <button type="button submit" class="btn btn-primary">Save changes</button>
-                    </div>
+                        <button type="submit" class="btn btn-primary" id="submitUpdatedItem">Save changes</button>
+                    </div> -->
                 </div>
             </div>
         </div>
-
+        
 
 
         <div class="simple-slider">
@@ -266,78 +286,78 @@
         <div class="container">
 
             <div class="row text-center mt-5 pt-3">
-                <p class="display-6">Profile and Gifts</p>
+                <p class="display-6">Profile</p>
             </div>
 
+            
+        
+            <img id="selected"  class="rounded-circle"
+                                style="width: 15em; height: 15em; object-fit: cover; border: 2px solid black; position: relative; bottom: -312px; right: -153px" alt="" />
+                        </div>
 
             <div class="row">
                 <!-- profile pic -->
-                <div class="col-7 d-flex justify-content-center gy-5 mb-5" ">
-                    <div class=" d-flex justify-content-start mb-4"></div>
-                <img id="selectedAvatar" src="assets/img/girlpic.jpg" class="rounded-circle"
-                    style="width: 15em; height: 15em; object-fit: cover;" alt="example placeholder" />
-            </div>
-
-
-            <!-- profile name -->
-
-            <div class="col-4  gy-5 mb-5 py-5">
-
-                <!-- To contain the name of the person -->
-                <p class="display-6 fs-3" id="profileName"> Bekoe Theophilus</p>
-                <p class="display-6 fs-3" id="profileName"> theolog75@gmail.com</p>
-                <div class="text-center d-flex justify-content-center py-3">
-
-                    <button type="button" class="btn btn-primary d-flex justify-content-center
-                    " data-bs-toggle="modal" data-bs-target="#profileModal">Edit
-                        Profile</button>
-
-
-                </div>
-
-            </div>
-        </div>
-        <hr>
-        <div class="row mt-5">
-
-            <!-- LIST OF GIFTS HERE -->
-
-            <div class=" col-8">
-                <div class="row mt-5">
-                    <div class="col-8">
-                        <div class="card" style="max-width:100em;">
-                            <div class="row">
-                                <div class="col">
-                                    <img src="assets/img/girlpic.jpg" class="card-img-top rounded-end-3" alt="...">
-                                </div>
-                                <div class="col">
-                                    <img src="assets/img/girlpic.jpg" class="card-img-top rounded-end-3 float-end"
-                                        alt="...">
-                                </div>
-                            </div>
-
-
-
-                            <div class="card-body">
-                                <h5 class="card-title">Shirts</h5>
-                                <p class="card-text ">Shirts at Dansoman.</p>
-                                <a href="#" class="btn btn-primary ">0549231075</a>
-                            </div>
+                <div class="col-7 d-flex justify-content-center gy-5 mb-5">
+                    <div class="d-flex justify-content-center align-items-center flex-column">
+                        <!-- Profile picture -->
+                        <div class="mb-4">
+                            <img id="selected"  class="rounded-circle"
+                                style="width: 15em; height: 15em; object-fit: cover; border: 2px solid black;" alt="" />
                         </div>
+            
+                        <!-- Placeholder text for when no image is set
+                        <div class="placeholder-texts"
+                            style="font-size: 1.2em; color: black; text-align: center; font-weight: bold; display: block;">
+                            Image not set
+                        </div> -->
+            
+                        <!-- Edit Profile Image button -->
+                        <button type="button" class="btn btn-primary mt-3"
+                            data-bs-toggle="modal" data-bs-target="#profileImageModal">Edit Profile Image</button>
                     </div>
                 </div>
-
-
+            
+                <!-- Spacer column for separation -->
+                <div class="col-1"></div> <!-- This column adds space between image and profile details -->
+            
+                <!-- profile name -->
+                <div class="col-4 gy-5 mb-5 py-5">
+                    <!-- Profile name -->
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="me-2">Username:</span>
+                        <p class="display-6 fs-3 mb-0" id="profileName"></p>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="me-2">Email:</span>
+                        <p class="display-6 fs-3 mb-0" id="profileEmail"></p>
+                    </div>
+                    <div class="text-center d-flex justify-content-center py-3">
+                        <button type="button" class="btn btn-primary d-flex justify-content-center"
+                            data-bs-toggle="modal" data-bs-target="#profileModal">Edit Profile</button>
+                    </div>
+                </div>
             </div>
-            <!-- BUTTON TO TRIGGER MODAL FORM FOR EDITING -->
-            <div class=" col-4 align-content-center">
-                <button class="btn btn-primary my-5 fs-2 h-auto w-auto text-nowrap " type="button"
-                    data-bs-toggle="modal" data-bs-target="#Modal">Edit
-                    Item</button>
+            
+    </div>
+
+        <hr>
+
+        <div class="row mt-5">
+            <!-- LIST OF GIFTS HERE -->
+            <div class="row text-center mt-5 pt-3">
+                <p class="display-6">Your Gifts</p>
             </div>
-
-
-
+        
+            <!-- Container for items -->
+            <div class="col-12" id="itemsContainers">
+                <!-- Items will be dynamically inserted here -->
+            </div>
+        
+            <!-- Button to add a new item (shown only when no items exist) -->
+            <div class="row text-center mt-5" id="addItemSection" style="display: none;">
+                <p class="text-muted">You have no available items</p>
+                <button class="btn btn-primary fs-2" id="addItemButton">Add New Item</button>
+            </div>
         </div>
         </div>
         </div>
@@ -398,7 +418,9 @@
             <!-- Section: Text -->
             <section class="mb-5">
                 <div class="row d-flex justify-content-center">
-                    <div class="col-lg-8">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="login.html">Log out</a>
+                    </li>     <div class="col-lg-8">
                         <p>
                             At HUMANITY, we pride ourselves as being the best Humanitariran institution
                             ensuring that everybody in <b>Koforidua </b> is a winner and blessing by sharing their extra
@@ -421,6 +443,533 @@
     </footer>
 
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+    
+
+    <!-- FOr getting and displaying user profile details and image  tested--> 
+    <script>
+        async function fetchUserProfile() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+    
+            if (!userData) {
+                console.error('User ID not found in localStorage');
+                return;
+            }
+    
+            try {
+                const response = await fetch(`/auth/get_user_by_id/${userData.id}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok', userData.id);
+                }
+                const data = await response.json();
+                updateProfileUI(data);
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
+        }
+    
+        function updateProfileUI(profile) {
+            document.getElementById('profileName').innerText = profile.username;
+            document.getElementById('profileEmail').innerText = profile.email;
+        }
+    
+        async function fetchUserProfileImage() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+    
+            if (!userData || !userData.username) {
+                console.error('User data not found in localStorage');
+                return;
+            }
+    
+            try {
+                const response = await fetch(`/profile/get_profile_by_username/${userData.username}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile image');
+                }
+                const data = await response.json();
+                updateProfileImage(data);
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
+        }
+    
+        function updateProfileImage(imageData) {
+            const avatarElement = document.getElementById('selected');
+            if (imageData.image) {
+                console.info('Error fetching profile:', imageData.image);
+                avatarElement.src = imageData.image;
+                console.info('Error fetching profile:', avatarElement.src);
+
+            } else {
+                avatarElement.src = 'default-image.png'; // Fallback image if none is provided
+                avatarElement.alt = "Image not set"; // Fallback alt text
+            }
+        }
+    
+        // Fetch user profile and image when the page loads
+        window.addEventListener('load', () => {
+            fetchUserProfile();
+            fetchUserProfileImage();
+        });
+    </script>
+
+
+
+
+<!-- for updating user detils  tested-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('updateProfile').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const form = document.getElementById('updateProfile');
+            // const formData = new FormData(form);
+
+            const updateUserData = {
+                firstname: document.getElementById('firstname').value,
+                lastname: document.getElementById('lastname').value,
+                email: document.getElementById('email').value,
+                user_id:userData.id ,
+            }
+
+
+            try {
+                const response = await fetch(`/auth/update_individual_user_fields/${userData.id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updateUserData)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    console.log('error:', updateUserData);
+                    throw new Error('Failed to submit form');
+                    // console.log('error:', result);
+                }
+
+                
+                console.log('Success:', result);
+
+                // Handle the success, e.g., redirect to login
+                window.location.href = 'profile.html';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error submitting the form. Please try again.');
+            }
+        });
+    });
+</script>
+
+
+<!-- for updating user profile image and displaying it  tested-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Listen for the form submission event
+        const formElement = document.getElementById('updateProfileImageModel');
+
+        if (!formElement) {
+            console.error('Form with ID "updateProfileImageModel" not found.');
+            return;
+        }
+
+        formElement.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const userData = JSON.parse(localStorage.getItem('userData'));
+
+            if (!userData || !userData.username) {
+                console.error('User data not found in localStorage');
+                return;
+            }
+
+            const fileInput = document.getElementById('uploadUpdatedProfileImage');
+            const file = fileInput.files[0];
+            console.info("file", file)
+            console.info("username", userData.username)
+
+
+            if (!file) {
+                alert('Please select an image to upload.');
+                return;
+            }
+
+            // Prepare FormData for the image upload
+            const profileImageData = new FormData();
+            profileImageData.append('username', userData.username); // Attach the username from the user data
+            profileImageData.append('file', file); // Attach the image file
+
+            // const itemData = {
+            //     category: document.getElementById('category').value,
+            //     name: document.getElementById('name').value,
+            // }
+            // Fetch profile image update based on username
+            try {
+                const imageResponse = await fetch('/profile/update_profile/', {
+                    method: 'PATCH',
+                    body: profileImageData, // Send FormData (which handles file uploads)
+                });
+
+                if (imageResponse.ok) {
+                    const imageResult = await imageResponse.json();
+                    alert('Profile image successfully submitted!');
+
+                    // Redirect to another page after successful update
+                    window.location.href = 'profile.html';
+                } else {
+                    const errorDetails = await imageResponse.json();
+                    console.log('Data submitted:', profileImageData);
+                    console.log('Error details during ima, db: db_dependency,ge submission:', errorDetails);
+
+                    // Log validation error messages if present
+                    if (Array.isArray(errorDetails.detail)) {
+                        errorDetails.detail.forEach((error, index) => {
+                            console.log(`Validation error ${index + 1}:`, error);
+                        });
+                    }
+
+                    alert('Failed to submit profile image.');
+                }
+            } catch (error) {
+                console.error('Error during image submission:', error);
+                alert('An error occurred while submitting the profile image.');
+            }
+        });
+    });
+</script>
+
+
+<!-- to get items and display in a model for editing -->
+<script>
+
+async function deleteItem(itemId) {
+    const confirmation = confirm("Are you sure you want to delete this item?");
+    
+    if (confirmation) {
+        try {
+            const response = await fetch(`/item/delete_item_by_id/${itemId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (response.ok) {
+                alert('Item successfully deleted!');
+                
+
+                // Remove item card from the DOM
+                const itemCard = document.querySelector(`button[onclick="deleteItem('${itemId}')"]`).closest('.col-md-1.col-lg-2');
+                if (itemCard) {
+                    itemCard.remove(); // Remove the item card from the DOM
+                }
+                
+                // Check if no more items are left and show "Add Item" button
+                if (itemsContainers.children.length === 0) {
+                    addItemSection.style.display = 'block';
+                }
+                // Redirect or refresh after successful update
+                window.location.href = 'profile.html';
+            } else {
+                const errorMessage = await response.json();
+                console.error('Failed to delete item:', errorMessage);
+                alert('Error deleting item: ' + errorMessage.message || 'Something went wrong.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an error deleting the item. Please try again later.');
+        }
+    }
+}
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const itemsContainer = document.getElementById('itemsContainers'); // Make sure ID matches your HTML
+    const addItemSection = document.getElementById('addItemSection'); // Section for "No Items" message
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    if (!userData || !userData.username) {
+        console.error('User data not found in localStorage');
+        return;
+    }
+
+    let Items = []; // Will hold items fetched from the server
+
+    // Fetch function to get all items for the user
+    async function fetchAllItems() {
+        try {
+            const response = await fetch(`/item/get_all_items_with_images_by_username/${userData.username}`);
+            Items = await response.json(); // Fetch items and store them in the Items array
+            console.info("items ",Items)
+            
+            // If items exist, render them
+            if (Items.length > 0) {
+                console.info("item lenght ",Items.length)
+                renderItems();
+            } else {
+                console.info("item lenghts ",Items.length)
+                // No items available, show "Add Item" button
+                addItemSection.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error fetching items:', error);
+        }
+    }
+
+    // Function to render items dynamically
+    function renderItems() {
+    // Clear the items container before rendering
+    itemsContainer.innerHTML = '';
+
+    // Create a row variable to hold each row of items
+    let rowHTML = '<div class="row">';
+
+    Items.forEach((item, index) => {
+        // Create the item card HTML
+        const itemCard = `
+            <div class="col-md-1 col-lg-2 mb-4">  <!-- Adjust columns for 5 items per row -->
+                <div class="card h-100">
+                    <img src="${item.image || 'assets/img/default.jpg'}" class="card-img-top" alt="${item.name || 'No name'}">
+                    <div class="card-body">
+                        <h5 class="card-title">Name:  ${item.name || 'N/A'}</h5>
+                        <p class="card-text"><strong>Description:</strong> ${item.description || 'No description available'}</p>
+                        <p class="card-text"><strong>Category:</strong> ${item.category || 'Uncategorized'}</p>
+                        <p class="card-text"><strong>Email:</strong> ${item.email || 'No email provided'}</p>
+                        <p class="card-text"><strong>Location:</strong> ${item.location || 'Location not specified'}</p>
+                        <p class="card-text"><strong>Phone:</strong> ${item.phone_number || 'Phone number not provided'}</p>
+                        <p class="card-text"><strong>Years Used:</strong> ${item.yearsUsed || 'Not specified'}</p>
+                        <button class="btn btn-primary" onclick="editItem('${item.id}')">Edit Item</button>
+                        <button class="btn btn-primary" onclick="deleteItem('${item.id}')">Delet Item</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Add the item card to the row
+        rowHTML += itemCard;
+
+        // Check if the row has 5 items or if it's the last item
+        if ((index + 1) % 5 === 0 || index === Items.length - 1) {
+            rowHTML += '</div>'; // Close the row
+            itemsContainer.innerHTML += rowHTML; // Append the row to the container
+            rowHTML = '<div class="row">'; // Start a new row
+        }
+    });
+}
+
+
+    // Function to handle the Edit Item button click
+    window.editItem = function (itemId) {
+        const item = Items.find(item => item.id === itemId); // Find the item by its ID
+
+        localStorage.setItem('Item_Id', itemId);
+        if (item) {
+            console.info("items rendered", item)
+            // Populate modal fields with the selected item's data
+            document.getElementById('image').src = item.image;
+            document.getElementById('emails').value = item.email;
+            document.getElementById('name').value = item.name;
+            document.getElementById('categorys').value = item.category;
+            document.getElementById('description').value = item.description;
+            document.getElementById('location').value = item.location;
+            document.getElementById('phone_number').value = item.phone_number;
+            document.getElementById('yearsUsed').value = item.yearsUsed;
+
+            // Show the modal
+            const editItemModal = new bootstrap.Modal(document.getElementById('updateItemModel'));
+            editItemModal.show();
+        }
+    };
+
+    
+
+    // Call fetch function on page load
+    fetchAllItems();
+
+  
+
+
+    // Handle the Add Item button click
+    document.getElementById('addItemButton').addEventListener('click', function () {
+        window.location.href = 'giftout.html';
+    });
+});
+
+</script>
+
+<!-- 
+<script>
+
+async function deleteItem(itemId) {
+        console.info("item_id", itemId)
+    // Confirm before deleting the item
+    const confirmation = confirm("Are you sure you want to delete this item?");
+    
+    if (confirmation) {
+        try {
+            // Make the DELETE request to your API endpoint
+            const response = await fetch(`/item/delete_item_by_id/${itemId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (response.ok) {
+                // Item deleted successfully
+                alert('Item successfully deleted!');
+
+                // Remove the deleted item from the DOM instead of reloading the page
+                const itemCard = document.querySelector(`button[onclick="deleteItem('${itemId}')"]`).closest('.col-md-1.col-lg-2');
+                if (itemCard) {
+                    itemCard.remove(); // Remove the item card from the DOM
+                }
+                
+                // Optionally, check if no more items are left and show "Add Item" button
+                if (itemsContainer.children.length === 0) {
+                    addItemSection.style.display = 'block';
+                }
+            } else {
+                // Handle error
+                const errorMessage = await response.json();
+                console.error('Failed to delete item:', errorMessage);
+                alert('Error deleting item: ' + errorMessage.message || 'Something went wrong.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an error deleting the item. Please try again later.');
+        }
+    }
+}
+
+
+</script> -->
+
+<script>
+      function displaySelectedImage(event, imgElementId) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            document.getElementById(imgElementId).src = e.target.result;
+        };
+
+        reader.readAsDataURL(file); // Convert the file to a Data URL
+    }
+}
+</script>
+
+
+<!-- FOR updating item -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Attach event listener to the form, not the modal
+    document.getElementById('editItemForm').addEventListener('submit', async function(event) {
+        event.preventDefault();  // Prevent form from submitting the default way
+
+        const userData = JSON.parse(localStorage.getItem('userData')); // Retrieve user data from localStorage
+        
+        console.info("About to save updated item");
+
+        // Collect form data
+        const updateItemData = {
+            name: document.getElementById('name').value,
+            description: document.getElementById('description').value, // Fix: using correct ID for description
+            phone_number: document.getElementById('phone_number').value,
+            location: document.getElementById('location').value,
+            email: document.getElementById('emails').value, // Fix: 'emails' instead of 'email'
+            category: document.getElementById('categorys').value, // Fix: 'categorys' instead of 'category'
+            yearsUsed: document.getElementById('yearsUsed').value
+        };
+
+        console.info("New item data: ", updateItemData);
+        
+        try {
+            console.info("New item data2: ", JSON.stringify(updateItemData));
+            const item_id = localStorage.getItem('Item_Id')
+            console.info("New item id: ", item_id);
+
+            // First request: update item data
+            const response = await fetch(`/item/update_individual_item_fields/${item_id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateItemData)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                console.log('Error with item update:', updateItemData);
+                throw new Error('Failed to submit form');
+            }
+
+            // Success handling for item update
+            const itemId = result.id;
+
+            console.log('Item successfully updated:', result);
+            console.log('Item id:', itemId);
+
+            // Second request: upload the image
+            const fileInput = document.getElementById('imageUpload');
+            const file = fileInput.files[0];  // Get the file from input
+            
+            if (file) {
+                // Prepare FormData for image upload
+                const itemImageData = new FormData();
+                itemImageData.append('item_id', itemId); // Attach the itemId from the first request
+                itemImageData.append('file', file);      // Attach the file from input
+
+                const imageResponse = await fetch(`/item/update_item_image/${itemId}`, {
+                    method: 'PATCH',
+                    body: itemImageData, // Send FormData (which handles file uploads)
+                });
+
+                if (imageResponse.ok) {
+                    alert('Item image successfully updated!');
+                } else {
+                    const errorDetails = await imageResponse.json();
+                    console.log("Error during image submission:", errorDetails);
+                    alert('Failed to submit item image.');
+                }
+            }
+
+            // Redirect or refresh after successful update
+            window.location.href = 'profile.html';
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an error submitting the form. Please try again.');
+        }
+    });
+});
+
+</script>
+
+<script>
+    function logout() {
+    // Clear the localStorage
+    localStorage.clear();
+    
+    // Optionally, set loginStatus to false if that's what you're tracking
+    localStorage.setItem('loginStatus', 'false');
+    
+    // Redirect to the index page
+    window.location.href = 'index.html';
+}
+
+</script>
+
+
+    
 </body>
 
 </html>
+

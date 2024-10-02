@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0f4c3, #0b6dad); /* Soft gradient background */
+            color: #333;
+        }
+        .item-container {
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 320px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            background-color: #fff; /* White background for the card */
+        }
+        .item-image {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            margin-bottom: 15px;
+            border-radius: 8px; /* Rounded corners for the image */
+            object-fit: cover;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-body {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="item-container">
+        <img id="itemImage" class="item-image" alt="Item Image">
+        <div class="card-body">
+            <h3 id="itemName">Item Name</h3>
+            <p id="itemDescription">Description goes here...</p>
+            <p id="itemPhone">Phone: <span id="itemPhoneNumber">123456789</span></p>
+            <p id="itemLocation">Location: <span id="itemLocationText">Unknown</span></p>
+        </div>
+        <button id="okButton">OK</button>
+    </div>
+
+    <script>
+        // Function to get the URL parameter by name
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        async function fetchItemDetails() {
+            const itemId = getUrlParameter('id'); // Get the 'id' parameter from the URL
+            if (itemId) {
+                try {
+                    const response = await fetch(`/item/get_item_by_id/${itemId}`);  // Make sure this is the correct backend endpoint
+                    if (!response.ok) {
+                        throw new Error('Network response was not OK');
+                    }
+                    const item = await response.json();  // Parse the JSON data
+
+                    // Check if item data was returned
+                    if (!item) {
+                        console.error('Item not found');
+                        return;
+                    }
+
+                    // Populate the page with the item details
+                    document.getElementById('itemImage').src = item.image ? item.image : 'default-image.png'; // Fallback to default image
+                    document.getElementById('itemName').innerText = item.name;
+                    document.getElementById('itemDescription').innerText = item.description;
+                    document.getElementById('itemPhoneNumber').innerText = item.phone_number;
+                    document.getElementById('itemLocationText').innerText = item.location || 'Location not available';
+                } catch (error) {
+                    console.error('Error fetching item data:', error);
+                }
+            } else {
+                console.error('No item ID found in the URL.');
+            }
+        }
+
+        // Fetch the item details when the page loads
+        window.onload = fetchItemDetails;
+    </script>
+
+    <script>
+        // When the user clicks the OK button, they are redirected to the index page
+        document.getElementById('okButton').addEventListener('click', () => {
+            window.location.href = 'index.html'; // Replace with your index page URL
+        });
+    </script>
+
+</body>
+</html>
