@@ -26,23 +26,23 @@ from fastapi import Form, Depends
 from pydantic import BaseModel
 
 class CreateUserSchema(BaseModel):
-    first_name: str
-    last_name: str
+    firstname: str
+    lastname: str
     email: str
     phone_number: str
     password: str
 
 # A function to create the schema from form data
 def create_user_schema(
-    first_name: str = Form(...),
-    last_name: str = Form(...),
+    firstname: str = Form(...),
+    lastname: str = Form(...),
     email: str = Form(...),
     phone_number: str = Form(...),
     password: str = Form(...)
 ) -> CreateUserSchema:
     return CreateUserSchema(
-        first_name=first_name,
-        last_name=last_name,
+        firstname=firstname,
+        lastname=lastname,
         email=email,
         phone_number=phone_number,
         password=password

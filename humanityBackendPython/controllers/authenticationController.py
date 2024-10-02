@@ -13,6 +13,8 @@ import random
 
 
 from models.authenticationModel import *
+from models.profileModel import *
+from models.itemsModel import *
 from schemas.authenticationSchema import *
 from database.databaseConnection import SessionLocal
 # from security.auth import *
@@ -76,9 +78,9 @@ async def create_user(db: db_dependency, user: CreateUserSchema = Depends(create
     hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
     user_data = User(
                 email=user.email,
-                firstname=user.first_name,
-                lastname =user.last_name,
-                username = user.first_name + user.last_name[0],
+                firstname=user.firstname,
+                lastname =user.lastname,
+                username = user.firstname + user.lastname[0],
                 phone_number=user.phone_number,
                 password =hashed_password.decode('utf-8'),
                 role ="USER"
@@ -88,6 +90,15 @@ async def create_user(db: db_dependency, user: CreateUserSchema = Depends(create
 
     db.add(user_data)
     await db.commit()
+
+    # create user profile
+    user_profile_data = Profile(
+            username=user_data.username,  # Use new_item_data.id here
+    )
+
+    db.add(user_profile_data)
+    await db.commit()
+
     logger.info("User created and saved in the database")
 
 
@@ -251,7 +262,7 @@ async def get_all_users( db: db_dependency):
 
 
 # get user by id
-@router.get("/auth/get_user_by_id")
+@router.get("/auth/get_user_by_id/{user_id}")
 async def get_all_users( user_id: uuid.UUID ,db: db_dependency):
 
     user_data = await db.get(User, user_id)
@@ -325,44 +336,83 @@ async def get_total_number_of_users_by_role(role: str, db: db_dependency):
 # update user by id
 
 
-@router.patch("/auth/update_individual_user_fields/{user_id}") #user_input: UserCreation
-async def update_user(user_id: uuid.UUID, db: db_dependency):
 
+@router.patch("/auth/update_individual_user_fields/{user_id}")
+async def update_user(db: db_dependency,user_id: str, user_input: dict):
     
-    logger.info("Endpoint : update_user")
+    logger.info("Endpoint: update_user called for user_id: %s", user_id)
     
+    # Query for the user data
+    user_data = await db.get(User, uuid.UUID(user_id))
+    # user_data = users.scalar()
+    old_username = user_data.username
+    print("old username : ", old_username)
     
-        # query for user data
-    user_data = await db.get(User, user_id)
-    logger.info("User data queried successfully")
-        
-        # convert user data and user input into a dictionary
+    if not user_data:
+        logger.error("User with ID %s not found", user_id)
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    logger.info("User data queried successfully for user_id: %s", user_id)
+    
+    # Convert user data and input into dictionaries
     converted_user_data = user_data.__dict__
-    inputs = user_input.__dict__
+    inputs = user_input
+# username = user.firstname + user.lastname[0],
+    if 'firstname' in inputs and 'lastname' in inputs:
+        inputs['username'] = inputs['firstname'] + inputs['lastname'][0]
+        print("in option1")
+        print(inputs['username'])
+    elif 'lastname' in inputs:
+        inputs['username'] = converted_user_data['firstname'] + inputs['lastname'][0]
+        print("in option2")
+        print(inputs['username'])
+    elif 'firstname' in inputs:
+        inputs['username'] = inputs['firstname'] + converted_user_data['lastname'][0]
+        print("in option3")
+        print(inputs['username'])
        
-        # copy converted user data
-    result = converted_user_data.copy() 
-
-        # check if user input key is found in the converted user data, if true initialize the converted use data key with the user inputs value
-    for key, value in inputs.items():
-        if key in result:
-            result[key] = value  
-            
-        # replace the old user data with the new user data
-    for key, value in result.items():
-        setattr(user_data, key, value)
-            
-    logger.info("User data ready for storage")
-        
-        # save user data in database
-    db.add(user_data)
-    await db.commit()
-    await db.refresh(user_data)
-    logger.info("User data updated")
-        
-        
-    return user_data
+    # print(inputs.firstname)
+    # print("imput username" , inputs.firstname)
     
+    # Only update fields that are present in both user data and input
+    for key, value in inputs.items():
+        if key in converted_user_data and value is not None: 
+            # print("key : ", key)
+            # print("value :", value) # Avoid updating with `None` values
+            setattr(user_data, key, value)
+    
+    logger.info("User data ready for storage for user_id: %s", user_id)
+    
+    # Save the updated user data to the database
+    print("new username : ",user_data.username)
+    # db.add(user_data)
+    await db.commit()
+    # await db.refresh(user_data)
+
+    # change profile username
+    user_profile = await db.execute(select(Profile).where(Profile.username == old_username))
+    user_profile_data = user_profile.scalar()
+
+    user_profile_data.username = user_data.username
+    print("profile username: ", user_profile_data.username)
+    # db.add(user_profile_data)//
+    await db.commit()
+    
+
+    # change profile username
+    user_item = await db.execute(select(Item).where(Item.username == old_username))
+    user_item_data = user_item.scalars().all()
+
+    for item in user_item_data:
+        item.username = user_data.username 
+    print("item username: ", item.username)
+
+    # db.add(user_item_data)//
+    await db.commit()
+    
+    logger.info("User data updated successfully for user_id: %s", user_id)
+    
+    return user_data
     
     
 
