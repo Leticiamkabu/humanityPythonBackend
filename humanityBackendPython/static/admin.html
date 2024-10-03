@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 </head>
 
-<body>
-    <header>
-        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<body style=" background-color: rgb(6, 53, 94);">
+    <header style=" background-color: rgb(251, 252, 253);">
         <nav class="navbar navbar-expand-lg shadow-sm navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
@@ -21,12 +21,11 @@
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.html">Home</a>
+                            <a class="nav-link active" href="index.html">UserDashboard</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link active" href="login.html">Login</a>
-                        </li>
-
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link active" href="giftout.html">Gift Out</a>
                         </li>
@@ -36,274 +35,931 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="about.html">About</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html" onclick="logout()">Log out</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <!-- VERTICAL PILLS TO CONTAINS MAIN MENUS FOR ADMIN -->
-
     </header>
-    <main>
-        <!-- MODAL FOR EDIT BUTTON -->
 
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+    <main class="container mt-4" >
+
+        <!-- Working Modal -->
+        <div class="modal fade" id="updateItemModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Update Item</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="">
-
-                            <label for="firstName">First Name</label>
-                            <input type="text" class="form-control">
-
-                            <label for="firstName">Last Name</label>
-                            <input type="text" class="form-control">
-
-                            <label for="firstName">e-mail</label>
-                            <input type="text" class="form-control">
-
-                            <label for="firstName">Phone Number</label>
-                            <input type="text" class="form-control">
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL FOR DELETE BUTTON -->
-        <!-- Button trigger modal -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class=" modal-dialog-centered modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="p fw-bold">Do you really want to Delete this User</div>
-                        <button type="button" class="btn btn-success">Yes</button>
-                        <button type="button" class="btn btn-danger">No</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- END OF EDIT MODAL -->
-
-
-
-
-        <div class="d-flex align-items-start ms-3">
-            <div class="nav flex-column nav-pills me-3 mt-4" id="v-pills-tab" role="tablist"
-                aria-orientation="vertical">
-                <button class="nav-link active" id="v-pills-overview-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-overview" type="button" role="tab" aria-controls="v-pills-overview"
-                    aria-selected="true">Overview</button>
-                <button class="nav-link mt-3" id="v-pills-users-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-users" type="button" role="tab" aria-controls="v-pills-users"
-                    aria-selected="false">Users</button>
-                <button class="nav-link mt-3" id="v-pills-products-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-products" type="button" role="tab" aria-controls="v-pills-products"
-                    aria-selected="false">Products</button>
-
-            </div>
-            <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-overview" role="tabpanel"
-                    aria-labelledby="v-pills-overview-tab">
-
-
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-
-                                <!-- ADMIN ADDITION -->
-
-                                <div class="container py-4 main">
-                                    <div class="row g-0 align-items-center">
-                                        <div class="col-lg-6 mb-5 mb-lg-0">
-                                            <div class="card cascading-right bg-body-tertiary"
-                                                style="backdrop-filter: blur(30px);">
-                                                <div class="card-body p-5 shadow-5 text-center">
-                                                    <h2 class="mb-5 display-6">Register Admin</h2>
-                                                    <form id="registerForm">
-                                                        <!-- 2 column grid layout with text inputs for the first and last names -->
-                                                        <div class="row">
-                                                            <div class="col-md-6 mb-4">
-                                                                <div data-mdb-input-init class="form-outline">
-                                                                    <input type="text" id="form3Example1"
-                                                                        name="first_name" class="form-control"
-                                                                        required />
-                                                                    <label class="form-label" for="form3Example1">First
-                                                                        name</label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 mb-4">
-                                                                <div data-mdb-input-init class="form-outline">
-                                                                    <input type="text" id="form3Example2"
-                                                                        name="last_name" class="form-control"
-                                                                        required />
-                                                                    <label class="form-label" for="form3Example2">Last
-                                                                        name</label>
-                                                                </div>
-                                                            </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col">
+                                    <form id="editItemForm">
+                                        <div class="mb-4">
+                                            <!-- ITEM CATEGORY -->
+                                            <label for="category" class="form-label fw-semibold fs-5">Item Category</label>
+                                            <select class="form-select mb-3" id="categorys" required>
+                                                <option selected disabled>Choose Item</option>
+                                                <option value="CLOTHS">Clothes</option>
+                                                <option value="HOME_APPLIANCES">Home Appliances</option>
+                                                <option value="ELECTRONICS">Electronics</option>
+                                                <option value="FURNITURE">Furniture</option>
+                                                <option value="CONSTRUCTION_TOOLS">Construction tools</option>
+                                                <option value="BOOKS">Books</option>
+                                                <option value="LEARNING_MATERIALS">Learning Materials</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- ITEM PICTURE -->
+                                            <label for="imageUpload" class="form-label fw-semibold fs-5 mt-3">Upload Images of Items</label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="d-flex justify-content-start mb-4">
+                                                        <img id="image" src="assets/img/default.jpg" class="rounded-circle"
+                                                            style="width: 200px; height: 200px; object-fit: cover; border: 2px solid #ccc;" 
+                                                            alt="Item Image" />
+                                                    </div>
+                                                    <div class="d-flex justify-content-start mb-4">
+                                                        <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                                                            <label class="form-label text-white m-1" for="imageUpload">Choose file</label>
+                                                            <input type="file" class="form-control d-none" id="imageUpload" 
+                                                                onchange="displaySelectedImage(event, 'image')" />
                                                         </div>
-
-                                                        <!-- Email input -->
-                                                        <div data-mdb-input-init class="form-outline mb-4">
-                                                            <input type="email" id="form3Example3" name="email"
-                                                                class="form-control" required />
-                                                            <label class="form-label" for="form3Example3">Email
-                                                                address</label>
-                                                        </div>
-
-
-                                                        <!-- Password input -->
-                                                        <div data-mdb-input-init class="form-outline mb-4">
-                                                            <input type="password" id="form3Example5" name="password"
-                                                                class="form-control" required />
-                                                            <label class="form-label"
-                                                                for="form3Example5">Password</label>
-                                                        </div>
-
-
-
-                                                        <!-- Submit button -->
-                                                        <button type="submit"
-                                                            class="btn btn-primary btn-block mb-4 fs-6">
-                                                            Register
-                                                        </button>
-                                                    </form>
+                                                    </div>
                                                 </div>
                                             </div>
+
+        
+                                        <!-- ITEM NAME -->
+                                        <div class="mb-4">
+                                            <label for="name" class="form-label fw-semibold fs-5">Item Name</label>
+                                            <input type="text" class="form-control" id="name" required>
+                                        </div>
+        
+                                        <div class="mb-4">
+                                            <label for="description" class="form-label fw-semibold fs-5">Item Description</label>
+                                            <textarea class="form-control" id="description" rows="3" required></textarea>
+                                        </div>
+        
+                                        <div class="mb-4">
+                                            <label for="location" class="form-label fw-semibold fs-5">Your Location</label>
+                                            <select class="form-select mb-4" id="location" required>
+                                                <option selected disabled>Choose Location in Koforidua</option>
+                                                <option value="Jumapo">Jumapo</option>
+                                                <option value="Suhyen">Suhyen</option>
+                                                <option value="Okrase">Okrase</option>
+                                                <option value="Poly Junction">Poly Junction</option>
+                                                <option value="Mile 50">Mile 50</option>
+                                                <option value="Jackson Park">Jackson Park</option>
+                                            </select>
+                                        </div>
+        
+                                        <div class="mb-4">
+                                            <label for="yearsUsed" class="form-label fw-semibold fs-5">Item's Number of Years Used</label>
+                                            <select class="form-select mb-4" id="yearsUsed" required>
+                                                <option selected disabled>Choose Number of Years Used</option>
+                                                <option value="ONE_TO_FIVE_YEARS">1 - 5 Years</option>
+                                                <option value="SIX_TO_TEN_YEARS">6 - 10 Years</option>
+                                                <option value="ELEVEN_AND_ABOVE">Above 10 Years</option>
+                                            </select>
                                         </div>
 
-                                        <div class="col-lg-6 mb-5 mb-lg-0">
-                                            <img src="assets/img/girlpic.jpg" class="w-100 rounded-4 shadow-4" alt="" />
+                                        <div class="mb-4">
+                                            <label for="phone_number" class="form-label fw-semibold fs-5">Mobile Phone Number</label>
+                                            <input type="tel" class="form-control" id="phone_number" required>
                                         </div>
-                                    </div>
 
-                                    <!-- GETTING DETAILS OF USERS AND PRODUCTS -->
-                                    <div class="row align-items-center mt-5 pt-5">
-                                        <label for="usersList" class="form-label fw-semibold fs-5">Get Users</label>
-                                        <select class="form-select mb-3" id="category"
-                                            aria-label="Default select example">
-                                            <option selected disabled>Choose Category</option>
-                                            <option value="totalUsers">Total Number of User</option>
-                                            <option value="totalItems">Total Number of Items</option>
-                                            <option value="totalAdmins">Total Number of Admins</option>
-                                        </select>
+                                        <div class="mb-4">
+                                            <label for="email" class="form-label fw-semibold fs-5">Email Address</label>
+                                            <input type="email" class="form-control" id="emails" required>
+                                        </div>
 
-                                        <!-- The total Number will replace this number here -->
-                                        <div class="p display-6"> 0</div>
-                                    </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" id="submitUpdatedItem">Save changes</button>
+                                        </div>
+                                    </form>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submitUpdatedItem">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- !-- EDIT PROFILE IMAGE MODAL -->
+        <!-- Modal -->
+        <div class="modal top fade" id="updateProfileModel" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+            <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center">
+                <div class="modal-content w-75">
+                    <div class="modal-body p-4">
+                        <img src="assets/img/girlpic.jpg" alt="avatar"
+                            class="rounded-circle position-absolute top-0 start-50 translate-middle h-50" />
+                        <form id = "updateProfileImageModel">
+                            <div>
+                                
+                                <!-- ITEM PICTURE -->
+                                <label for="uploadUpdatedProfileImage" class="form-label fw-semibold fs-5 mt-3">Upload Profile Picture</label>
+                                <input type="file" id="uploadUpdatedProfileImage" class="form-control mb-4">
+                                
+
+                            </div>
+
+                            
+
+                            <!-- Submit button -->
+                            <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                                class="btn btn-primary">Save</button>
+
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        <!-- Working Modal for edit users -->
+        <div class="modal fade" id="updateUserModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Update user</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col">
+                                    <form id="editUsersForm">
+        
+                                        <!-- ITEM NAME -->
+                                        <div class="mb-4">
+                                            <label for="firstname" class="form-label fw-semibold fs-5">First Name</label>
+                                            <input type="text" class="form-control" id="firstname" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="lastname" class="form-label fw-semibold fs-5">Last Name</label>
+                                            <input type="text" class="form-control" id="lastname" required>
+                                        </div>
+        
+
+                                        <div class="mb-4">
+                                            <label for="phone_number" class="form-label fw-semibold fs-5">Phone Number</label>
+                                            <input type="number" class="form-control" id="phone_numberss" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="email" class="form-label fw-semibold fs-5">Email Address</label>
+                                            <input type="email" class="form-control" id="emailss" required>
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" id="submitUpdatedItem">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submitUpdatedItem">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+       
+       
+
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3" style=" background-color: rgb(171, 200, 226);">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical"   style=" position: relative; top: 20px; height: 486px;">
+                    <button class="nav-link active" id="v-pills-overview-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-overview" type="button" role="tab" aria-controls="v-pills-overview"
+                        aria-selected="true">Overview</button>
+                    <button class="nav-link mt-3" id="v-pills-users-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-users" type="button" role="tab" aria-controls="v-pills-users"
+                        aria-selected="false">Users</button>
+                        <!-- <div id="displayU"></div> -->
+                    <button class="nav-link mt-3" id="v-pills-item-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-products" type="button" role="tab" aria-controls="v-pills-products"
+                        aria-selected="false">Gifts</button>
+                    <button class="nav-link mt-3" id="v-pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-products" type="button" role="tab" aria-controls="v-pills-products"
+                        aria-selected="false">Profile</button>
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Users</h5>
+                                <p class="card-text" id="totalUsers">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Items</h5>
+                                <p class="card-text" id="totalItems">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Logged In Users</h5>
+                                <p class="card-text" id="loggedInUsers">100</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-                <!-- USERS TAB -->
-                <div class="tab-pane fade mt-5 pt-5 ms-5" id="v-pills-users" role="tabpanel"
-                    aria-labelledby="v-pills-users-tab">
-                    <ul class="list-group" style="width: 50em;">
-                        <div class="list-group-item list-group-item-action " aria-current="true">
-                            <div class="d-flex ">
-                                <h5 class="mb-1">Theophilus Bekoe</h5>
-                            </div>
-                            <p class="mb-1">theology75@gmail.com</p>
-                            <div class="float-end">
-                                <button class="button btn-success btn" id="editButton" type="button"
-                                    data-bs-toggle="modal" data-bs-target="#editModal">
-                                    Edit</button>
-                                <button class="button btn-success btn" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modalDelete"> Delete</button>
-                            </div>
-                        </div>
-
-                    </ul>
-                </div>
-
-                <!-- PRODUCTS TAB -->
-                <div class="tab-pane fade" id="v-pills-products" role="tabpanel" aria-labelledby="v-pills-products-tab">
-
-                    <ul class="list-group" style="width: 50em;">
-                        <div class="list-group-item list-group-item-action " aria-current="true">
-
-
-                            <!-- CARD CONTAINING ITEMS -->
-                            <div class="card" style="width: 18rem;">
-                                <img src="assets/img/girlpic.jpg" style="height: 10em;" ; class="card-img-top "
-                                    alt="...">
-                                <div class="card-body">
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-
-                                </div>
-                            </div>
-
-                            <hr>
-                            <div class="float-end card-footer">
-                                <button class="button btn-success btn" id="editButton" type="button"
-                                    data-bs-toggle="modal" data-bs-target="#editModal">
-                                    Edit</button>
-                                <button class="button btn-success btn" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modalDelete"> Delete</button>
-                            </div>
-
-                    </ul>
-
-                    </ul>
+                assets/img/admin_Welcome.png
+                <div id="dynamicContent" class="mt-4" style="background-color: #3486bf; border-radius: 10px; height: 360px; overflow-y: auto; padding: 10px;">
+                    <img src = "assets/img/admin_Welcome.png">
+                    <!-- Content will be loaded here dynamically -->
+                    <div id="itemsContainer"></div> <!-- Container for items -->
+                    <nav id="pagination" aria-label="Page navigation" class="mt-3">
+                        <ul class="pagination justify-content-center"></ul> <!-- Pagination links -->
+                    </nav>
                 </div>
 
             </div>
         </div>
     </main>
-    <footer>
 
-    </footer>
+    <footer></footer>
 
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-</body>
-<script>
-    var editButton = document.querySelector('#editButton');
+    <!-- Include jQuery from CDN (make sure it's before any script that uses $) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    editButton.addEventListener('click', function () {
-        console.log("Button clicked");
+    <script>
+        function logout() {
+            localStorage.clear();
+            localStorage.setItem('loginStatus', 'false');
+            window.location.href = 'index.html';
+        }
+    
+        async function loadOverview() {
+            const itemsPerPage = 5; // Number of items to display per page
+            let currentPage = 1;
+            let items = []; // This will be filled with fetched items
+    
+            // Cache DOM elements
+            // const itemsContainer = document.getElementById('dynamicContent');
+            // const paginationList = document.querySelector('#pagination .pagination');
+    
+            const dynamicContent = document.getElementById('dynamicContent');
+            dynamicContent.innerHTML = '<h4>Loading overview...</h4>';
+
+
+
+            // Function to render items for the current page
+            function renderItems() {
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const itemsToDisplay = items.slice(startIndex, endIndex);
+    
+                let itemsHTML = itemsToDisplay.map(item => `
+                    <div class="col-12 mt-3">
+                        <div class="card" style="background-color: white; border-radius: 10px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="${item.image}" loading="lazy" style="width: 150px; height: 150px; object-fit: cover;" class="img-fluid rounded-start" alt="${item.name}">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${item.name}</h5>
+                                        <p class="card-text">${item.description}</p>
+                                        <p class="card-text"><strong>Location:</strong> ${item.location}</p>
+                                        <p class="card-text"><strong>Phone:</strong> ${item.phone_number}</p>
+                                        <p class="card-text"><strong>Email:</strong> ${item.email}</p>
+                                        <p class="card-text"><strong>Category:</strong> ${item.category}</p>
+                                        <p class="card-text"><strong>Years Used:</strong> ${item.yearsUsed}</p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join(' ');
+    
+                dynamicContent.innerHTML = itemsHTML;
+            }
+
+    
+            // Function to set up pagination
+            function setupPagination() {
+                const totalPages = Math.ceil(items.length / itemsPerPage);
+                paginationList.innerHTML = ''; // Clear previous pagination
+    
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageItem = document.createElement('li');
+                    pageItem.classList.add('page-item');
+                    const pageLink = document.createElement('a');
+                    pageLink.classList.add('page-link');
+                    pageLink.href = '#';
+                    pageLink.textContent = i;
+    
+                    pageLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        currentPage = i;
+                        renderItems();
+                    });
+    
+                    pageItem.appendChild(pageLink);
+                    paginationList.appendChild(pageItem);
+                }
+            }
+    
+            // Fetch items and initialize pagination
+            async function fetchItems() {
+                // const loadingMessage = '<h4>Loading Items...</h4>';
+                // itemsContainer.innerHTML = loadingMessage;
+    
+                const dynamicContent = document.getElementById('dynamicContent');
+                dynamicContent.innerHTML = '<h4>Loading overview...</h4>';
+
+                try {
+                    const response = await fetch('/item/get_all_items_with_images');
+    
+                    // Check if the response is okay (status in the range 200-299)
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+    
+                    items = await response.json();
+                    renderItems();
+                    setupPagination();
+                } catch (error) {
+                    console.error('Error fetching items:', error);
+                    itemsContainer.innerHTML = 'Error loading gifts data';
+                }
+            }
+    
+            // Load items on page load
+            await fetchItems();
+        }
+
+         // Add event listener to the "Overview" button
+        document.getElementById('v-pills-overview-tab').addEventListener('click', loadOverview);
+    
+
+        async function loadUsers() {
+            const dynamicContent = document.getElementById('dynamicContent');
+            dynamicContent.innerHTML = '<h4>Loading Users...</h4>';
+
+            let users = [];
+
+            try {
+                const response = await fetch('/auth/get_all_users');
+                users = await response.json();
+                console.info("users response: ", users)
+                let usersHTML = '<h4>Users List</h4><div class="row">';
+                users.forEach(user => {
+                    usersHTML += `
+                        <div class="col-md-4">
+                            <div class="card" >
+                                <div class="card-body" ">
+                                    <h5 class="card-title"><strong>Username:</strong>${user.username}</h5>
+                                    <p class="card-text"><strong>Email:</strong>${user.email}</p>
+                                    <button class="btn btn-primary" onclick="editUser('${user.id}')">Edit</button>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                usersHTML += '</div> <hr>';
+                dynamicContent.innerHTML = usersHTML;
+            } catch (error) {
+                dynamicContent.innerHTML = 'Error loading users data';
+            }
+
+
+             // Function to handle the Edit Item button click
+             window.editUser = function (userId) {
+                const userdatas = users.find(user => user.id === userId); // Find the item by its ID
+    
+                localStorage.setItem('users_user_id', userId);
+                localStorage.setItem('users_user_id_used', false);
+                if (users) {
+                    console.info("items rendered", userdatas)
+                    // Populate modal fields with the selected item's data
+                    document.getElementById('firstname').value = userdatas.firstname;
+                    document.getElementById('lastname').value = userdatas.lastname;
+                    // document.getElementById('username').value = item.category;
+                    document.getElementById('phone_numberss').value = userdatas.phone_number;
+                    document.getElementById('emailss').value = userdatas.email;
+                    
+    
+                    // Show the modal
+                    const editUserModal = new bootstrap.Modal(document.getElementById('updateUserModel'));
+                    editUserModal.show();
+
+
+
+
+                    // check if id was used
+
+
+                    // let user_id_used = false;
+
+                    // // When the modal is opened, reset the form submission status
+                    // $('#updateUserModel').on('show.bs.modal', function () {
+                    //     user_id_used = false;  // Reset the flag when modal opens
+                    // });
+
+                    // // Handle form submission
+                    // $('#editUsersForm').on('submit', function (e) {
+                    //     e.preventDefault();
+                    //     user_id_used = true;  // Set flag to true when form is submitted
+                    //     $('#myModal').modal('hide');  // Close the modal after submission
+                    //     console.log('Form submitted!');myFomyFormmyFormrm
+                    // });
+
+                    // Detect when the modal is closed (hidden)
+                    $('#updateUserModel').on('hidden.bs.modal', function () {
+                        if (localStorage.getItem('users_user_id_used') === false) {
+                            localStorage.removeItem('users_user_id');
+                            console.log('Modal closed without submission.');
+                            // Handle what happens when no submission was made
+                        }
+                    });
+
+                }
+            };
+        }
+    
+        // Add event listener to the "Users" tab
+        document.getElementById('v-pills-users-tab').addEventListener('click', loadUsers);
+
+        
+    
+        async function loadGifts() {
+            const dynamicContent = document.getElementById('dynamicContent');
+            dynamicContent.innerHTML = '<h4>Loading Gifts...</h4>';
+
+            let items = [];
+
+            try {
+                const response = await fetch('/item/get_all_items_with_images');
+                items = await response.json();
+                console.info("item response: ", items)
+                let itemsHTML = '<h4>Gifts List</h4><div class="row">';
+                items.forEach(item => {
+                    itemsHTML += `
+                        <div class="col-md-4">
+    <div class="card" style="height: 250px;">
+        <div class="row g-0">
+            <!-- Image Container -->
+            <div class="col-md-4 d-flex align-items-center">
+                <img src="${item.image}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;" class="img-fluid rounded-start" alt="${item.name}">
+            </div>
+            <!-- Card Body -->
+            <div class="col-md-8">
+                <div class="card-body" >
+                    <h5 class="card-title">${item.name}</h5>
+                    <p class="card-text">${item.description}</p>
+                    <button class="btn btn-primary" onclick="editItem('${item.id}')">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+                });
+                itemsHTML += '</div>';
+                dynamicContent.innerHTML = itemsHTML;
+            } catch (error) {
+                dynamicContent.innerHTML = 'Error loading gifts data';
+            }
+
+
+
+             // Function to handle the Edit Item button click
+             window.editItem = function (itemId) {
+                const itemdatas = items.find(item => item.id === itemId); // Find the item by its ID
+    
+                localStorage.setItem('Gifts_item_id', itemId);
+                localStorage.setItem('Gifts_item_id_used', false);
+                if (items) {
+                    console.info("items rendered", itemdatas)
+                    // Populate modal fields with the selected item's data
+                    document.getElementById('image').src = itemdatas.image;
+                    document.getElementById('emails').value = itemdatas.email;
+                    document.getElementById('name').value = itemdatas.name;
+                    document.getElementById('categorys').value = itemdatas.category;
+                    document.getElementById('description').value = itemdatas.description;
+                    document.getElementById('location').value = itemdatas.location;
+                    document.getElementById('phone_number').value = itemdatas.phone_number;
+                    document.getElementById('yearsUsed').value = itemdatas.yearsUsed;
+                   
+    
+                    // Show the modal
+                    const editItemModal = new bootstrap.Modal(document.getElementById('updateItemModel'));
+                    editItemModal.show();
+                }
+
+
+                let user_id_used = false;
+            };
+        }
+    
+        // Add event listener to the "Gifts" tab
+        document.getElementById('v-pills-item-tab').addEventListener('click', loadGifts);
+    
+
+        async function loadProfile() {
+            const dynamicContent = document.getElementById('dynamicContent');
+            dynamicContent.innerHTML = '<h4>Loading Profiles...</h4>';
+
+
+            let profiles = [];
+            // let userData = [];
+
+            try {
+    const response1 = await fetch('/profile/get_all_profiles');
+    profiles = await response1.json();  // Ensure you're assigning profiles correctly
+    console.info("item response: ", profiles);
+
+    // Ensure there's at least one profile before accessing username
+    if (profiles.length > 0) {
+        console.info("profile username: ", profiles[0].username);
+    }
+
+    let profileHTML = '<h4>Profile List</h4><div class="row">';
+        
+    profiles.forEach(profile => {
+        // Dynamically access profile fields inside the loop
+        profileHTML += `
+            <div class="col-md-4">
+                <div class="card" style="height: 250px;">
+                    <div class="row g-0">
+                        <!-- Image Container -->
+                        <div class="col-md-4 d-flex align-items-center">
+                            <img src="${profile.image ? profile.image : 'default-image.jpg'}" loading="lazy" 
+                                style="width: 100%; height: 200%; object-fit: cover; position: relative; top: 70px;" 
+                                class="img-fluid rounded-start" alt="${profile.username}">
+                        </div>
+                        <!-- Card Body -->
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">${profile.username}</h5>
+                                <button class="btn btn-primary" onclick="editProfile('${profile.id}')">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
     });
+
+    profileHTML += '</div>';
+    dynamicContent.innerHTML = profileHTML;
+} catch (error) {
+    console.error("Error fetching profiles:", error);
+    dynamicContent.innerHTML = 'Error loading profile data';
+}
+
+
+// Function to handle the Edit Item button click
+window.editProfile = function (profileId) {
+                const profiledatas = profiles.find(profile => profile.id === profileId); // Find the item by its ID
+    
+                console.info("profile id", profileId)
+                localStorage.setItem('profile_id', profileId);
+                localStorage.setItem('profile_username', profiledatas.username);
+                localStorage.setItem('profile_id_used', false);
+                if (profiles) {
+                    console.info("profile rendered", profiledatas)
+                    // Populate modal fields with the selected item's data
+                    document.getElementById('image').src = profiledatas.image;
+                    // document.getElementById('emails').value = itemdatas.email;
+                    // document.getElementById('name').value = itemdatas.name;
+                    // document.getElementById('categorys').value = itemdatas.category;
+                    // document.getElementById('description').value = itemdatas.description;
+                    // document.getElementById('location').value = itemdatas.location;
+                    // document.getElementById('phone_number').value = itemdatas.phone_number;
+                    // document.getElementById('yearsUsed').value = itemdatas.yearsUsed;
+                   
+    
+                    // Show the modal
+                    const editProfileModal = new bootstrap.Modal(document.getElementById('updateProfileModel'));
+                    editProfileModal.show();
+                }
+
+
+                let user_id_used = false;
+            };
+
+
+        }
+    
+        // Add event listener to the "Profile" tab
+        document.getElementById('v-pills-profile-tab').addEventListener('click', loadProfile);
+    
+        // Load items once the DOM is fully loaded
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     loadOverview();
+        // });
+
+         // Load items once the DOM is fully loaded
+    //     document.addEventListener('DOMContentLoaded', function () {
+    //     // Simulate a click on the Overview button when the page loads
+    //     document.getElementById('v-pills-overview-tab').click();
+    // });
+
+    </script>
+    
+    <!-- editing user form -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        // Attach event listener to the form, not the modal
+        document.getElementById('editUsersForm').addEventListener('submit', async function(event) {
+            event.preventDefault();  // Prevent form from submitting the default way
+    
+            // const userData = JSON.parse(localStorage.getItem('userData')); // Retrieve user data from localStorage
+            // localStorage.removeItem('users_user_id');
+            localStorage.setItem('users_user_id_used', true)
+
+            console.info("About to save updated user details");
+    
+            // Collect form data
+            const updateUserData = {
+                firstname: document.getElementById('firstname').value,
+                lastname: document.getElementById('lastname').value, // Fix: using correct ID for description
+                phone_number: document.getElementById('phone_numberss').value,
+                email: document.getElementById('emailss').value, // Fix: 'emails' instead of 'email'
+                
+            };
+    
+            console.info("New user data: ", updateUserData);
+            
+            try {
+                console.info("New user data2: ", JSON.stringify(updateUserData));
+                const user_id = localStorage.getItem('users_user_id')
+                console.info("New user id: ", user_id);
+    
+                // First request: update item data
+                const response = await fetch(`/auth/update_individual_user_fields/${user_id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updateUserData)
+                });
+    
+                const result = await response.json();
+    
+                if (!response.ok) {
+                    console.log('Error with user update:', updateUserData);
+                    throw new Error('Failed to submit form');
+                }
+    
+                // Success handling for item update
+                const userId = result.id;
+    
+                console.log('User successfully updated:', result);
+                console.log('User id:', userId);
+    
+                // Redirect or refresh after successful update
+                window.location.href = 'admin.html';
+    
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error submitting the form. Please try again.');
+            }
+        });
+    });
+    
+    </script>
+
+<!-- editing items/Gifts form -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Attach event listener to the form, not the modal
+    document.getElementById('editItemForm').addEventListener('submit', async function(event) {
+        event.preventDefault();  // Prevent form from submitting the default way
+
+        const userData = JSON.parse(localStorage.getItem('userData')); // Retrieve user data from localStorage
+        
+        console.info("About to save updated item");
+
+        // Collect form data
+        const updateItemData = {
+            name: document.getElementById('name').value,
+            description: document.getElementById('description').value, // Fix: using correct ID for description
+            phone_number: document.getElementById('phone_number').value,
+            location: document.getElementById('location').value,
+            email: document.getElementById('emails').value, // Fix: 'emails' instead of 'email'
+            category: document.getElementById('categorys').value, // Fix: 'categorys' instead of 'category'
+            yearsUsed: document.getElementById('yearsUsed').value
+        };
+
+        console.info("New item data: ", updateItemData);
+        
+        try {
+            console.info("New item data2: ", JSON.stringify(updateItemData));
+            const item_id = localStorage.getItem('Gifts_item_id')
+            console.info("New item id: ", item_id);
+
+            // First request: update item data
+            const response = await fetch(`/item/update_individual_item_fields/${item_id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateItemData)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                console.log('Error with item update:', updateItemData);
+                throw new Error('Failed to submit form');
+            }
+
+            // Success handling for item update
+            const itemId = result.id;
+
+            console.log('Item successfully updated:', result);
+            console.log('Item id:', itemId);
+
+            // Second request: upload the image
+            const fileInput = document.getElementById('imageUpload');
+            const file = fileInput.files[0];  // Get the file from input
+            
+            if (file) {
+                // Prepare FormData for image upload
+                const itemImageData = new FormData();
+                itemImageData.append('item_id', itemId); // Attach the itemId from the first request
+                itemImageData.append('file', file);      // Attach the file from input
+
+                const imageResponse = await fetch(`/item/update_item_image/${itemId}`, {
+                    method: 'PATCH',
+                    body: itemImageData, // Send FormData (which handles file uploads)
+                });
+
+                if (imageResponse.ok) {
+                    alert('Item image successfully updated!');
+                } else {
+                    const errorDetails = await imageResponse.json();
+                    console.log("Error during image submission:", errorDetails);
+                    alert('Failed to submit item image.');
+                }
+            }
+
+            // Redirect or refresh after successful update
+            window.location.href = 'admin.html';
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an error submitting the form. Please try again.');
+        }
+    });
+});
 
 </script>
 
-</html>
 
-<!-- 
-hi, please start creating the admin dashboard, the following are the things the admin would be able to do on the dashboard 
-register admins
-update user details by id
-get all users
-get user details by id
-get user details by username
-get users by role
-get total number of users
-get number of users by role
-get all profile
-delete profile
-# get all items
-# get total number of items
-# get item by id
-# get item by name
-thank you😊
--->
+<!-- for updating user profile image and displaying it  tested-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Attach event listener to the form, not the modal
+    document.getElementById('updateProfileImageModel').addEventListener('submit', async function(event) {
+        event.preventDefault();  // Prevent form from submitting the default way
+
+        const profileId = localStorage.getItem('profile_id'); // Retrieve user data from localStorage
+        const prodileUsername = localStorage.getItem('profile_username');
+
+        console.info("About to save updated item");
+        if (!profileId || !prodileUsername) {
+                console.error('User data not found in localStorage');
+                return;
+        }
+
+        const fileInput = document.getElementById('uploadUpdatedProfileImage');
+        const file = fileInput.files[0];
+        console.info("file", file)
+        // console.info("username", userData.username)
+
+        if (!file) {
+                alert('Please select an image to upload.');
+                return;
+            }
+
+        // Prepare FormData for the image upload
+        const profileImageData = new FormData();
+        profileImageData.append('username', prodileUsername); // Attach the username from the user data
+        profileImageData.append('file', file); // Attach the image file
+
+
+        // Collect form data
+        // const updateItemData = {
+        //     name: document.getElementById('name').value,
+        //     description: document.getElementById('description').value, // Fix: using correct ID for description
+        //     phone_number: document.getElementById('phone_number').value,
+        //     location: document.getElementById('location').value,
+        //     email: document.getElementById('emails').value, // Fix: 'emails' instead of 'email'
+        //     category: document.getElementById('categorys').value, // Fix: 'categorys' instead of 'category'
+        //     yearsUsed: document.getElementById('yearsUsed').value
+        // };
+
+        console.info("New profile data: ", profileImageData);
+        
+        try {
+                const imageResponse = await fetch('/profile/update_profile/', {
+                    method: 'PATCH',
+                    body: profileImageData, // Send FormData (which handles file uploads)
+                });
+
+                if (imageResponse.ok) {
+                    const imageResult = await imageResponse.json();
+                    alert('Profile image successfully submitted!');
+
+                    // Redirect to another page after successful update
+                    window.location.href = 'admin.html';
+                } else {
+                    const errorDetails = await imageResponse.json();
+                    console.log('Data submitted:', profileImageData);
+                    console.log('Error details during image submission:', errorDetails);
+
+                    // Log validation error messages if present
+                    if (Array.isArray(errorDetails.detail)) {
+                        errorDetails.detail.forEach((error, index) => {
+                            console.log(`Validation error ${index + 1}:`, error);
+                        });
+                    }
+
+                    alert('Failed to submit profile image.');
+                }
+            } catch (error) {
+                console.error('Error during image submission:', error);
+                alert('An error occurred while submitting the profile image.');
+            }
+    });
+});
+
+</script>
+
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            // Fetch the total items from the backend
+            const response = await fetch('/item/get_total_number_of_items'); // Replace with your actual backend URL
+            const data = await response.json();
+
+            // Update the totalItems element with the fetched data
+            document.getElementById('totalItems').textContent = data.total_items;
+        } catch (error) {
+            console.error('Error fetching total items:', error);
+            document.getElementById('totalItems').textContent = 'Error loading data';
+        }
+
+
+        try {
+            // Fetch the total users from the backend
+            const response = await fetch('/auth/get_total_number_of_users'); // Replace with your actual backend URL
+            const data = await response.json();
+
+            // Update the totalItems element with the fetched data
+            document.getElementById('totalUsers').textContent = data.total_users;
+        } catch (error) {
+            console.error('Error fetching total items:', error);
+            document.getElementById('totalUsers').textContent = 'Error loading data';
+        }
+    });
+</script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

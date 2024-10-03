@@ -130,14 +130,21 @@ async def get_profile_by_username(username: str, db: db_dependency):
 
 
 # get all profile
-@router.get("/profile/get_all_profiles")
-async def get_all_profiles( db: db_dependency):
 
+@router.get("/profile/get_all_profiles")
+async def get_all_profiles(db: db_dependency):
+    # Fetch all profiles
     profiles = await db.execute(select(Profile))
     profile_data = profiles.scalars().all()
     
-    if profile_data  is None:
-        raise HTTPException(status_code=200, detail="No user data exists", data = profile_data)
+    if not profile_data:  # Check if profile data is empty
+        raise HTTPException(status_code=200, detail="No user data exists")
+
+    # Process each profile
+    for profile in profile_data:
+        # Assuming `profile.image` stores the image data (binary) and `profile.image_filename` stores the filename
+        profile.image = f"data:image/png;base64,{profile.image}" if profile.image else None
+        profile.image_filename = profile.image_filename if profile.image_filename else None
     
     return profile_data
 

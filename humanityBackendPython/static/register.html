@@ -74,6 +74,7 @@
                 </div>
 
                 <a href="login.html" style="padding-right:50%;margin-bottom: 5em; text-decoration:none;">Back</a>
+                <a href="javascript:void(0);" onclick="registerAsAdmin()" style="padding-right:5px;margin-bottom: 5em; text-decoration:none;">Register As Admin</a>
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary btn-block mb-4">
                   Sign up
@@ -217,6 +218,41 @@
             }
         });
     });
+</script>
+
+<script>
+  // Define the function to handle the button click
+async function registerAsAdmin() {
+    try {
+        // Send a POST request to your backend endpoint
+        const response = await fetch('/auth/create_admin', {
+            method: 'POST',
+            
+            
+        });
+
+        // Check if the response is ok
+        if (response.ok) {
+            const data = await response.json(); // If your backend returns JSON
+            alert('Successfully registered as admin!');
+            console.log('Response:', data);
+
+            // Redirect to the index page
+            window.location.href = 'admin.html';
+        } else {
+            // Handle errors
+            console.error('Error:', response.status);
+            alert('Failed to register as admin.');
+        }
+    } catch (error) {
+        // Handle fetch errors
+        console.error('Error:', error);
+        alert('An error occurred while registering.');
+    }
+
+     
+}
+
 </script>
 
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>

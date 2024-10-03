@@ -123,7 +123,7 @@ async def create_admin_user( db: db_dependency):
                 firstname="so",
                 lastname ="lo",
                 # username = User.firstname + User.lastname[0],
-                phone_number="0556852682",
+                phone_number="0556852683",
                 password =hashed_password.decode('utf-8'),
                 role ="ADMIN"
 
@@ -276,7 +276,7 @@ async def get_all_users( user_id: uuid.UUID ,db: db_dependency):
 
 
 # get user details by usename
-@router.get("/auth/get_user_by_username")
+@router.get("/auth/get_user_by_username/{username}")
 async def get_users_by_username( username: str ,db: db_dependency):
 
     user = await db.execute(select(User).where(User.username == username))

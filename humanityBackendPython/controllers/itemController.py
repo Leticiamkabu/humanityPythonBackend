@@ -13,6 +13,8 @@ import random
 
 
 
+from sqlalchemy.future import select
+
 from models.itemsModel import *
 from schemas.itemsSchema import *
 from database.databaseConnection import SessionLocal
@@ -195,9 +197,6 @@ async def get_items_images_by_id( item_id : str, db: db_dependency):
     
 
 # get item by id
-from fastapi import HTTPException
-from sqlalchemy.future import select
-import uuid
 
 @router.get("/item/get_item_by_id/{item_id}")
 async def get_item_by_id(item_id: uuid.UUID, db: db_dependency):
@@ -250,10 +249,18 @@ async def get_all_items_with_images(db: db_dependency):
         
         # Add item details and image to the result
         item_info = {
+            # "id": item.id,
+            # "name": item.name,
+            # "description": item.description,
+            # "phone_number": item.phone_number,
             "id": item.id,
             "name": item.name,
             "description": item.description,
             "phone_number": item.phone_number,
+            "category": item.category,
+            "email" : item.email,
+            "yearsUsed" : item.yearsUsed,
+            "location" : item.location,
             "image": f"data:image/png;base64,{item_image_data.image}" if item_image_data else None,
             "image_filename": item_image_data.image_filename if item_image_data else None
         }
@@ -301,7 +308,7 @@ async def get_all_items_with_images_by_username(username: str , db: db_dependenc
 
 # get item by name
 @router.get("/item/get_item_by_name")
-async def get_item(item_name: str ,db: db_dependency):
+async def get_item_by_name(item_name: str ,db: db_dependency):
 
     item = await db.execute(select(Item).where(Item.name == item_name))
     item_data = item.scalar()
@@ -312,6 +319,21 @@ async def get_item(item_name: str ,db: db_dependency):
     return item_data 
 
 
+
+# get item by location
+@router.get("/item/get_item_by_location")
+async def get_item_by_location(item_location: str ,db: db_dependency):
+
+    item = await db.execute(select(Item).where(Item.location == item_location))
+    item_data = item.scalars().all()
+    
+    if item_data  is None:
+        raise HTTPException(status_code=200, detail="item with provided name does not exist", data = item_data)
+    
+    return item_data 
+
+
+
 # get total number of items
 @router.get("/item/get_total_number_of_items")
 async def get_total_number_of_items(db: db_dependency):
@@ -319,7 +341,7 @@ async def get_total_number_of_items(db: db_dependency):
     result = await db.execute(select(func.count(Item.id)))
     total_items = result.scalar()  
 
-    return {"total_users": total_items}
+    return {"total_items": total_items}
 
 
 # update item by id
@@ -420,3 +442,68 @@ async def delete_item_by_id(item_id: str, db: db_dependency):
 
 
 
+
+
+
+
+
+#     // Fetch items and initialize pagination
+# async function fetchItems(isInitialLoad = false) {
+#     const loadingMessage = '<h4>Loading Items...</h4>';
+
+#     if (isInitialLoad) {
+#         // Scenario 1: When the page loads, show loading in itemsContainer
+#         const itemsContainer = document.getElementById('itemsContainer');
+#         itemsContainer.innerHTML = loadingMessage;
+
+#         try {
+#             const response = await fetch('/item/get_all_items_with_images');
+
+#             // Check if the response is okay (status in the range 200-299)
+#             if (!response.ok) {
+#                 throw new Error(`HTTP error! Status: ${response.status}`);
+#             }
+
+#             const items = await response.json();
+#             renderItems(items); // Assuming renderItems() will render the items
+#             setupPagination(); // Assuming setupPagination() will handle pagination
+
+#         } catch (error) {
+#             console.error('Error fetching items:', error);
+#             itemsContainer.innerHTML = 'Error loading items';
+#         }
+
+#     } else {
+#         // Scenario 2: When the overview button is clicked, show loading in dynamicContent
+#         const dynamicContent = document.getElementById('dynamicContent');
+#         dynamicContent.innerHTML = loadingMessage;
+
+#         try {
+#             const response = await fetch('/item/get_all_items_with_images');
+
+#             // Check if the response is okay (status in the range 200-299)
+#             if (!response.ok) {
+#                 throw new Error(`HTTP error! Status: ${response.status}`);
+#             }
+
+#             const items = await response.json();
+#             renderItems(items); // Render items in dynamicContent
+#             setupPagination();
+
+#         } catch (error) {
+#             console.error('Error fetching items:', error);
+#             dynamicContent.innerHTML = 'Error loading items';
+#         }
+#     }
+# }
+        
+# // Call fetchItems(true) when the page loads
+# window.addEventListener('load', function() {
+#     fetchItems(true); // This is for the initial page load
+# });
+
+# // Adding event listener for the 'overview' button click
+# // const overviewButton = document.getElementById('v-pills-overview-tab');
+# // overviewButton.addEventListener('click', function() {
+# //     fetchItems(false); // This is for the button click
+# // });

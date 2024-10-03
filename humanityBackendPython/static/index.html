@@ -236,6 +236,26 @@
         if (isLoggedIn === 'true') {
             // Show logged-in links
             document.querySelector('.logged-in-links').style.display = 'flex';
+
+            // Function to check if the confirmation message should be shown
+            function showLoginMessage() {
+            // Check local storage to see if the message has been shown before
+            const messageShown = localStorage.getItem('loginMessageShown');
+
+            // If the message hasn't been shown before or localStorage is empty
+            if (!messageShown) {
+                // Show the confirmation message
+                const confirmation = confirm("Kindly ensure the removal of any unavailable items. Thank you. :)");
+
+                // Store the flag in local storage to track that the message has been shown
+                localStorage.setItem('loginMessageShown', 'true');
+            }
+        }
+
+        // Call this function once the user logs in
+        showLoginMessage();
+
+
         }
         else{
             document.querySelector('.register-button-container').style.display = 'flex';
@@ -254,7 +274,6 @@
 <!-- for pagenation -->
 <script>
 
-const confirmation = confirm("Kindly ensure the removal of any unavailable items. Thank you. :)");
     let currentPage = 1;
     const itemsPerPage = 5;
     let allItems = [];
@@ -280,6 +299,7 @@ const confirmation = confirm("Kindly ensure the removal of any unavailable items
         
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
+        console.info(allItems)
         const itemsToDisplay = allItems.slice(startIndex, endIndex);
     
         itemsToDisplay.forEach(item => {
@@ -332,6 +352,7 @@ const confirmation = confirm("Kindly ensure the removal of any unavailable items
     // Optionally, set loginStatus to false if that's what you're tracking
     localStorage.setItem('loginStatus', 'false');uuiuuid.UUIDd.UUID
     
+    localStorage.removeItem('loginMessageShown');
     // Redirect to the index page
     window.location.href = 'index.html';
 }
