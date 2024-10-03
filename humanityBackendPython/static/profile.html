@@ -124,9 +124,7 @@
                                 <!-- ITEM PICTURE -->
                                 <label for="uploadUpdatedProfileImage" class="form-label fw-semibold fs-5 mt-3">Upload Profile Picture</label>
                                 <input type="file" id="uploadUpdatedProfileImage" class="form-control mb-4">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="login.html">Log out</a>
-                                </li>
+                                
 
                             </div>
 
@@ -293,7 +291,7 @@
         
             <img id="selected"  class="rounded-circle"
                                 style="width: 15em; height: 15em; object-fit: cover; border: 2px solid black; position: relative; bottom: -312px; right: -153px" alt="" />
-                        </div>
+            </div>
 
             <div class="row">
                 <!-- profile pic -->
@@ -501,7 +499,7 @@
                 console.info('Error fetching profile:', avatarElement.src);
 
             } else {
-                avatarElement.src = 'default-image.png'; // Fallback image if none is provided
+                avatarElement.src = 'assets/img/imageNotFound.jpg'; // Fallback image if none is provided
                 avatarElement.alt = "Image not set"; // Fallback alt text
             }
         }
@@ -622,7 +620,7 @@
                 } else {
                     const errorDetails = await imageResponse.json();
                     console.log('Data submitted:', profileImageData);
-                    console.log('Error details during ima, db: db_dependency,ge submission:', errorDetails);
+                    console.log('Error details during image submission:', errorDetails);
 
                     // Log validation error messages if present
                     if (Array.isArray(errorDetails.detail)) {
