@@ -306,6 +306,42 @@ async def get_all_items_with_images_by_username(username: str , db: db_dependenc
 
 
 
+@router.get("/item/get_all_items_with_images_by_location/{location}") # 
+async def get_all_items_with_images_by_username(location: str , db: db_dependency):
+    # Get all items
+    items = await db.execute(select(Item).where(Item.location == location))
+    items_data = items.scalars().all()
+    
+    if not items_data:
+        raise HTTPException(status_code=404, detail="No items found")
+
+    # Prepare a list to hold items with images
+    items_with_images = []
+    
+    for item in items_data:
+        # For each item, get the associated image
+        item_image_query = await db.execute(select(ItemImage).where(ItemImage.item_id == str(item.id)))
+        item_image_data = item_image_query.scalar()
+        
+        # Add item details and image to the result
+        item_info = {
+            "id": item.id,
+            "name": item.name,
+            "description": item.description,
+            "phone_number": item.phone_number,
+            "category": item.category,
+            "email" : item.email,
+            "yearsUsed" : item.yearsUsed,
+            "location" : item.location,
+            "image": f"data:image/png;base64,{item_image_data.image}" if item_image_data else None,
+            "image_filename": item_image_data.image_filename if item_image_data else None
+        }
+        items_with_images.append(item_info)
+
+    return items_with_images
+
+
+
 # get item by name
 @router.get("/item/get_item_by_name")
 async def get_item_by_name(item_name: str ,db: db_dependency):
@@ -321,14 +357,14 @@ async def get_item_by_name(item_name: str ,db: db_dependency):
 
 
 # get item by location
-@router.get("/item/get_item_by_location")
+@router.get("/item/get_item_by_location/{item_location}")
 async def get_item_by_location(item_location: str ,db: db_dependency):
 
     item = await db.execute(select(Item).where(Item.location == item_location))
     item_data = item.scalars().all()
     
     if item_data  is None:
-        raise HTTPException(status_code=200, detail="item with provided name does not exist", data = item_data)
+        raise HTTPException(status_code=404, detail="item with provided name does not exist", data = item_data)
     
     return item_data 
 
