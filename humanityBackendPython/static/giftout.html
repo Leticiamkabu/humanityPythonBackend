@@ -42,6 +42,31 @@
             <div class="col-8 gx-5 ps-5 ms-5">
                 <form id="itemForm">
                     <!-- ITEM CATEGORY -->
+                    <label for="category" class="form-label fw-semibold fs-5">Choose your Region</label>
+                    <select class="form-select mb-3" id="category" aria-label="Default select example">
+                        <option selected disabled>Choose Region</option>
+                        <option value="accra">Greater Accra</option>
+                        <option value="ashanti">Ashanti Region</option>
+                        <option value="brongAhafo">Brong Aha</option>
+                        <option value="eastern">Eastern Region</option>
+                        <option value="north">Northern</option>
+                        <option value="upperWest">Upper West</option>
+                        <option value="LEARNING_MATERIALS">Upper East</option>
+                    </select>
+
+                    <label for="category" class="form-label fw-semibold fs-5">Township</label>
+                    <select class="form-select mb-3" id="category" aria-label="Default select example">
+                        <option selected disabled>Choose Township</option>
+                        <option value="aburi">Aburi</option>
+                        <option value="Akosombo">Akosombo</option>
+                        <option value="Begoro">Begoro</option>
+                        <option value="Coaltar">Coaltar</option>
+                        <option value="Kade">Kade</option>
+                        <option value="Koforidua">Koforidua</option>
+                        <option value="KroboOdumase">Krobo Odumase</option>
+                        <option value="Kwahu">Kwahu</option>
+                    </select>
+
                     <label for="category" class="form-label fw-semibold fs-5">Item Category</label>
                     <select class="form-select mb-3" id="category" aria-label="Default select example">
                         <option selected disabled>Choose Item</option>
@@ -69,7 +94,7 @@
                         <textarea class="form-control" id="description" rows="3"></textarea>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4" >
                         <label for="location" class="form-label fw-semibold fs-5">Your Location</label>
                         <select class="form-select mb-4" id="location">
                             <option selected disabled>Choose Location in Koforidua</option>
